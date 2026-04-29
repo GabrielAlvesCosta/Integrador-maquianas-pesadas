@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Usuário - Maquinaria PRO</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body class="bg-light">
+
+    <header class="main-header sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">Maquinaria <strong>PRO</strong></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="busca.html">Encontrar Serviços</a></li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <span class="text-muted me-3">Olá, Usuário!</span>
+                        <a href="index.html" class="btn btn-outline-danger btn-sm">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                
+                <aside class="col-lg-3">
+                    <div class="card border-0 shadow-sm p-3">
+                        <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link text-dark fw-bold mb-2" href="#">⚙️ Minha Conta</a>
+                            <a class="nav-link active bg-primary mb-2" href="#">📢 Meus Anúncios</a>
+                            <a class="nav-link text-dark fw-bold mb-2" href="#">💬 Mensagens</a>
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="col-lg-9">
+                    
+                    <div class="card border-0 shadow-sm p-4 mb-4">
+                        <h4 class="fw-bold text-dark-blue mb-4">Cadastrar Novo Equipamento ou Serviço</h4>
+                        
+                        <div id="mensagem-sucesso" class="alert alert-success d-none" role="alert">
+                            Anúncio cadastrado com sucesso! Vá para a <a href="busca.html" class="alert-link">página de busca</a> para conferir.
+                        </div>
+
+                        <form id="form-cadastro">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="tipo" class="form-label fw-semibold">Tipo de Anúncio</label>
+                                    <select class="form-select" id="tipo" required>
+                                        <option value="" disabled selected>Selecione...</option>
+                                        <option value="maquina">Máquina / Equipamento</option>
+                                        <option value="operador">Serviço de Operador</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-8">
+                                    <label for="titulo" class="form-label fw-semibold">Título do Anúncio</label>
+                                    <input type="text" class="form-control" id="titulo" placeholder="Ex: Trator de Esteira D6" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="local" class="form-label fw-semibold">Localização (Cidade, UF)</label>
+                                    <input type="text" class="form-control" id="local" placeholder="Ex: Maceió, AL" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="preco" class="form-label fw-semibold">Preço por Hora (R$)</label>
+                                    <input type="number" class="form-control" id="preco" placeholder="Ex: 150" min="1" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="imagem" class="form-label fw-semibold">Nome da Imagem</label>
+                                    <input type="text" class="form-control" id="imagem" placeholder="Ex: trator.png (ou cole o link de uma imagem da internet)">
+                                    <div class="form-text">Para teste, você pode usar links reais de imagens (ex: https://site.com/foto.jpg) ou nomes de arquivos locais.</div>
+                                </div>
+
+                                <div class="col-12 mt-4 text-end">
+                                    <button type="reset" class="btn btn-light me-2">Limpar Formulário</button>
+                                    <button type="submit" class="btn btn-primary px-4 fw-bold">Publicar Anúncio</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <h5 class="fw-bold mt-5 mb-3">Seus Anúncios Recentes</h5>
+                    <div class="row g-3" id="meus-anuncios-lista">
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Função para inicializar o banco se estiver vazio (igual às outras páginas)
+        function inicializarBancoDeDados() {
+            if (!localStorage.getItem('maquinaria_itens')) {
+                const itensIniciais = [
+                    { id: 1, tipo: 'maquina', titulo: 'Retroescavadeira CAT 416E', local: 'Maceió, AL', preco: '180,00', img: 'retroescavadeira.png' },
+                    { id: 2, tipo: 'maquina', titulo: 'Guindaste Articulado 30T', local: 'Rio Largo, AL', preco: '350,00', img: 'guindaste.png' }
+                ];
+                localStorage.setItem('maquinaria_itens', JSON.stringify(itensIniciais));
+            }
+        }
+
+        // Função principal do formulário
+        document.getElementById('form-cadastro').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede a página de recarregar
+            
+            inicializarBancoDeDados();
+
+            // Puxa o banco de dados atual
+            let itens = JSON.parse(localStorage.getItem('maquinaria_itens')) || [];
+
+            // Captura os valores digitados
+            const tipoSelecionado = document.getElementById('tipo').value;
+            const tituloDigitado = document.getElementById('titulo').value;
+            const localDigitado = document.getElementById('local').value;
+            const precoDigitado = parseFloat(document.getElementById('preco').value).toFixed(2).replace('.', ',');
+            let imagemDigitada = document.getElementById('imagem').value;
+
+            // Se não colocar imagem, usa uma genérica
+            if (!imagemDigitada) {
+                imagemDigitada = 'https://via.placeholder.com/300x200?text=Sem+Foto';
+            }
+
+            // Cria o novo objeto
+            const novoItem = {
+                id: Date.now(), // Gera um ID único baseado na data
+                tipo: tipoSelecionado,
+                titulo: tituloDigitado,
+                local: localDigitado,
+                preco: precoDigitado,
+                img: imagemDigitada
+            };
+
+            // Adiciona o novo item no início da lista
+            itens.unshift(novoItem);
+
+            // Salva de volta no navegador
+            localStorage.setItem('maquinaria_itens', JSON.stringify(itens));
+
+            // Mostra mensagem de sucesso e limpa o formulário
+            document.getElementById('mensagem-sucesso').classList.remove('d-none');
+            this.reset();
+            
+            // Atualiza a listagem rápida abaixo
+            carregarMeusAnuncios();
+
+            // Esconde a mensagem de sucesso após 5 segundos
+            setTimeout(() => {
+                document.getElementById('mensagem-sucesso').classList.add('d-none');
+            }, 5000);
+        });
+
+        // Função para mostrar os itens na tela do usuário
+        function carregarMeusAnuncios() {
+            inicializarBancoDeDados();
+            const itens = JSON.parse(localStorage.getItem('maquinaria_itens')) || [];
+            const container = document.getElementById('meus-anuncios-lista');
+            container.innerHTML = '';
+
+            // Mostra apenas os 3 mais recentes no painel
+            itens.slice(0, 3).forEach(item => {
+                container.innerHTML += `
+                    <div class="col-md-4">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body">
+                                <h6 class="fw-bold">${item.titulo}</h6>
+                                <p class="small text-muted mb-0">R$ ${item.preco}/h</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Carrega a listagem quando abre a página
+        document.addEventListener('DOMContentLoaded', carregarMeusAnuncios);
+    </script>
+</body>
+</html>

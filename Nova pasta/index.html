@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maquinaria PRO - Conexão Confiável</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+
+    <header class="main-header sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">Maquinaria <strong>PRO</strong></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="busca.html">Encontrar Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Sobre Nós</a></li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <a href="cadastro.html" class="login-btn text-decoration-none me-3">Entrar</a>
+                        <a href="#" class="btn btn-primary">Anunciar Equipamento</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero bg-dark text-white text-center py-5">
+            <div class="container">
+                <h1 class="display-5 fw-bold">A Conexão Confiável para sua Obra</h1>
+                <p class="lead col-md-8 mx-auto">Encontre, compare e alugue máquinas pesadas com operadores verificados.</p>
+                <div class="col-lg-9 mx-auto mt-4">
+                    <form action="busca.html" class="row g-2 align-items-center">
+                        <div class="col-md"><input type="text" class="form-control form-control-lg" placeholder="Qual equipamento?"></div>
+                        <div class="col-md-auto"><button type="submit" class="btn btn-primary btn-lg w-100">Buscar</button></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+        <section class="featured-equipment py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center fw-bold mb-5">Equipamentos e Trabalhadores Populares</h2>
+                <div class="row g-4" id="grid-destaques">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Função para inicializar dados de teste se o "banco" estiver vazio
+        function inicializarBancoDeDados() {
+            if (!localStorage.getItem('maquinaria_itens')) {
+                const itensIniciais = [
+                    { id: 1, tipo: 'maquina', titulo: 'Retroescavadeira CAT 416E', local: 'Maceió, AL', preco: '180,00', img: 'retroescavadeira.png' },
+                    { id: 2, tipo: 'maquina', titulo: 'Guindaste Articulado 30T', local: 'Rio Largo, AL', preco: '350,00', img: 'guindaste.png' },
+                    { id: 3, tipo: 'maquina', titulo: 'Caminhão Basculante', local: 'Arapiraca, AL', preco: '150,00', img: 'caminhao.png' },
+                    { id: 4, tipo: 'operador', titulo: 'Operador Charles Lisboa', local: 'Maceió, AL', preco: '62,00', img: 'trabalhador.png' }
+                ];
+                localStorage.setItem('maquinaria_itens', JSON.stringify(itensIniciais));
+            }
+        }
+
+        // Função para renderizar os itens na tela
+        function carregarDestaques() {
+            inicializarBancoDeDados();
+            
+            // Pega os itens salvos
+            const itens = JSON.parse(localStorage.getItem('maquinaria_itens')) || [];
+            const container = document.getElementById('grid-destaques');
+            
+            container.innerHTML = ''; // Limpa o container
+            
+            // Pega apenas os 4 primeiros itens para a tela inicial
+            const destaques = itens.slice(0, 4);
+
+            destaques.forEach(item => {
+                const badge = item.tipo === 'operador' ? '<span class="badge bg-success mb-2 align-self-start">Operador</span>' : '';
+                
+                const cardHTML = `
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="${item.img}" class="card-img-top" alt="${item.titulo}" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Sem+Foto'">
+                            <div class="card-body d-flex flex-column">
+                                ${badge}
+                                <h5 class="card-title fw-bold">${item.titulo}</h5>
+                                <p class="card-text text-muted small mb-1">📍 ${item.local}</p>
+                                <p class="card-text fs-5 mt-2 mb-3">A partir de <strong>R$ ${item.preco}</strong>/h</p>
+                                <a href="#" class="btn btn-outline-secondary mt-auto">Ver Detalhes</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // Executa ao carregar a página
+        document.addEventListener('DOMContentLoaded', carregarDestaques);
+    </script>
+</body>
+</html>
