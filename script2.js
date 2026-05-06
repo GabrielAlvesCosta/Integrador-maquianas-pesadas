@@ -1,21 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- SELETORES DE ELEMENTOS ---
-    // Modais
+
     const loginModalEl = document.getElementById('loginModal');
     const cadastroModalEl = document.getElementById('cadastroModal');
     const sucessoModalEl = document.getElementById('sucessoModal');
     const loginModal = new bootstrap.Modal(loginModalEl);
     const cadastroModal = new bootstrap.Modal(cadastroModalEl);
     const sucessoModal = new bootstrap.Modal(sucessoModalEl);
-    
-    // Botões de navegação
+
     const logoutBtn = document.getElementById('logoutBtn');
     const mainActionBtn = document.getElementById('mainActionBtn');
     const mostrarCriarLink = document.querySelector('#loginModal #mostrarCriarLink');
     const mostrarEntrarLink = document.querySelector('#cadastroModal #mostrarEntrarLink');
 
 
-    // Formulário de Cadastro
     const nomeInput = document.getElementById('name');
     const cpfInput = document.getElementById('cpf');
     const emailInput = document.getElementById('email');
@@ -28,14 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const criarBotao = document.getElementById('butaocriar');
     const mensagemCriar = document.getElementById('mensagemCriar');
     let fotoBase64 = null;
-
-    // Formulário de Login
+gin
     const entrarCpfInput = document.getElementById('entrarcpf');
     const entrarSenhaInput = document.getElementById('entrarsenha');
     const entrarBotao = document.getElementById('butaoentrar');
     const mensagemEntrar = document.getElementById('mensagemEntrar');
 
-    // --- FUNÇÕES DE VALIDAÇÃO (COMPLETAS) ---
     function validaNomeCompleto(nome) {
         const nomeTrimmed = nome.trim();
         if (!nomeTrimmed.includes(' ')) return false;
@@ -92,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
-    // --- FUNÇÕES DE ESTADO E UI ---
     function updateHeaderUI(isLoggedIn) {
         if (isLoggedIn) {
             logoutBtn.textContent = 'Sair';
@@ -131,9 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sucessoModal.hide();
     }
 
-    // --- EVENT LISTENERS ---
-    
-    // Botão Principal de Ação (Entrar/Cadastrar ou Minha Conta)
     mainActionBtn.addEventListener('click', (e) => {
         e.preventDefault();
         const loggedInUserCPF = localStorage.getItem('loggedInUserCPF');
@@ -144,27 +135,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Botão Sair
     logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
         logout();
     });
 
-    // Link para mostrar modal de cadastro
     mostrarCriarLink.addEventListener('click', (e) => {
         e.preventDefault();
         loginModal.hide();
         cadastroModal.show();
     });
 
-    // Link para mostrar modal de login
     mostrarEntrarLink.addEventListener('click', (e) => {
         e.preventDefault();
         cadastroModal.hide();
         loginModal.show();
     });
 
-    // Limpar formulários quando os modais são fechados
     loginModalEl.addEventListener('hidden.bs.modal', () => {
         document.getElementById('loginForm').reset();
         mensagemEntrar.textContent = '';
@@ -176,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fotoBase64 = null;
     });
 
-    // Lógica do Botão de Login
     entrarBotao.addEventListener('click', () => {
         mensagemEntrar.innerHTML = '';
         const cpf = entrarCpfInput.value.trim();
@@ -209,7 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Lógica do Botão de Cadastro
     criarBotao.addEventListener('click', () => {
         mensagemCriar.innerHTML = '';
         const erros = [];
@@ -253,8 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cadastroModal.hide();
         loginModal.show();
     });
-    
-    // Lógica de upload e prévia de foto
+
     fotoInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
@@ -282,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- MÁSCARAS ---
     cpfInput.addEventListener('input', (e) => {
         let valor = e.target.value.replace(/\D/g, '').substring(0, 11);
         valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
@@ -300,7 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = valorFormatado;
     });
 
-    // --- INICIALIZAÇÃO ---
     updateHeaderUI(localStorage.getItem('loggedInUserCPF'));
 });
 
