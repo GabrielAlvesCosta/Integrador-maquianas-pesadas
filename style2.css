@@ -9,14 +9,10 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* --- CLASSES DE COR CUSTOMIZADAS --- */
 .bg-dark-blue { background-color: var(--dark-blue) !important; }
 .bg-secondary-blue { background-color: var(--secondary-blue) !important; }
 .text-dark-blue { color: var(--dark-blue) !important; }
 
-/* --- AJUSTES DE COMPONENTES BOOTSTRAP --- */
-
-/* Logo */
 .logo {
     font-size: 1.5rem;
     font-weight: 700;
@@ -26,7 +22,6 @@ body {
     color: var(--accent-gold);
 }
 
-/* Botão Primário (Amarelo/Dourado) */
 .btn-primary {
     background-color: var(--accent-gold);
     border-color: var(--accent-gold);
@@ -40,7 +35,6 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-/* Botão Secundário (Vazado Azul) */
 .btn-secondary {
     background-color: transparent;
     border-color: var(--dark-blue);
@@ -53,7 +47,6 @@ body {
     color: #fff;
 }
 
-/* Badge de Destaque */
 .highlight-badge {
     background-color: var(--accent-gold);
     color: var(--dark-blue);
@@ -61,7 +54,6 @@ body {
     font-weight: 700;
 }
 
-/* Links do Header */
 .main-header .nav-link {
     font-weight: 600;
     color: #555;
@@ -71,7 +63,6 @@ body {
     color: var(--dark-blue);
 }
 
-/* Efeito Hover nos Cards */
 .card-hover {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

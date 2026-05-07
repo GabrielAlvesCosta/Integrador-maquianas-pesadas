@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 2000);
         });
 
-       entrarBotao.addEventListener('click', (e) => {
+entrarBotao.addEventListener('click', (e) => {
     e.preventDefault();
     mensagemEntrar.innerHTML = '';
     const cpf = entrarCpfInput.value.trim();

@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     const loginModalEl = document.getElementById('loginModal');
     const cadastroModalEl = document.getElementById('cadastroModal');
     const sucessoModalEl = document.getElementById('sucessoModal');
     const loginModal = new bootstrap.Modal(loginModalEl);
     const cadastroModal = new bootstrap.Modal(cadastroModalEl);
     const sucessoModal = new bootstrap.Modal(sucessoModalEl);
-
     const logoutBtn = document.getElementById('logoutBtn');
     const mainActionBtn = document.getElementById('mainActionBtn');
     const mostrarCriarLink = document.querySelector('#loginModal #mostrarCriarLink');
@@ -24,8 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewFoto = document.getElementById('previewFoto');
     const criarBotao = document.getElementById('butaocriar');
     const mensagemCriar = document.getElementById('mensagemCriar');
-    let fotoBase64 = null;
-gin
+    let fotoBase64 = null;gin
     const entrarCpfInput = document.getElementById('entrarcpf');
     const entrarSenhaInput = document.getElementById('entrarsenha');
     const entrarBotao = document.getElementById('butaoentrar');
@@ -238,7 +235,6 @@ gin
         cadastroModal.hide();
         loginModal.show();
     });
-
     fotoInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
@@ -261,7 +257,7 @@ gin
             previewFoto.style.display = 'none';
             fotoBase64 = null;
             if (file) {
-                 alert("Por favor, selecione um arquivo de imagem válido.");
+                alert("Por favor, selecione um arquivo de imagem válido.");
             }
         }
     });

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maquinaria PRO - Conexão Confiável (Bootstrap)</title>
+    
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="style1.css">
+</head>
+<body>
+
+<header class="main-header sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+<div class="container">
+<a class="navbar-brand logo" href="dashboard.html">Maquinaria <strong>PRO</strong></a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="mainNav">
+<ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+<li class="nav-item"><a class="nav-link" href="busca.html">Encontrar Serviços</a></li>
+<li class="nav-item"><a class="nav-link" href="#">Sobre Nós</a></li>
+</ul>
+<div class="d-flex align-items-center">
+<a href="cadastro.html" class="login-btn text-decoration-none me-3">Cadastrar</a>
+<a href="login.html" class="btn btn-primary">Login</a>
+</div>
+</div>
+</div>
+</nav>
+</header>
+
+<main>
+<section class="product-highlight bg-white py-4 border-bottom">
+<div class="container">
+<div class="row align-items-center g-4">
+<div class="col-lg-5">
+<img src="propaganda.png" alt="Equipamento em destaque" class="img-fluid rounded">
+</div>
+<div class="col-lg-7">
+<span class="badge highlight-badge mb-2">OFERTA DO MÊS</span>
+<h2 class="display-6 fw-bold text-dark-blue">Escavadeira Hidráulica 20T com Operador Certificado</h2>
+<p class="lead fs-6">Ideal para grandes terraplanagens e fundações. Garanta eficiência e segurança com disponibilidade imediata para projetos em <strong>Maceió e região</strong>.</p>
+<a href="#" class="btn btn-secondary">Verificar Preços e Agendar</a>
+</div>
+</div>
+</div>
+</section>
+
+<section class="hero bg-dark-blue text-white text-center py-5">
+<div class="container">
+<h1 class="display-5 fw-bold">A Conexão Confiável para sua Obra</h1>
+<p class="lead col-md-8 mx-auto">Encontre, compare e alugue máquinas pesadas com operadores verificados. Transparência e segurança do início ao fim do seu projeto.</p>
+<div class="col-lg-9 mx-auto mt-4">
+<a href="busca.html" class="btn btn-primary btn-lg w-100">Buscar</a>
+</div>
+</div>
+</section>
+        
+<section class="featured-equipment py-5 bg-light">
+<div class="container">
+<h2 class="text-center fw-bold text-dark-blue mb-5">Equipamentos e Trabalhadores Populares na sua Região</h2>
+                
+<div class="position-relative" id="container-carrossel">
+                    
+<button id="btn-prev" class="btn btn-primary btn-navegacao position-absolute top-50 start-0 translate-middle-y shadow" style="display: none; left: 10px !important;">&#10094;</button>
+
+<div class="row g-4" id="grid-destaques">
+</div>
+
+<button id="btn-next" class="btn btn-primary btn-navegacao position-absolute top-50 end-0 translate-middle-y shadow" style="display: none; right: 10px !important;">&#10095;</button>
+
+</div>
+</div>
+</section>
+
+<section class="cta-operators bg-dark-blue text-white text-center py-5">
+<div class="container">
+<h2 class="fw-bold">É Operador de Máquinas Pesadas?</h2>
+<p class="lead col-md-8 mx-auto">Aumente sua visibilidade, alcance novos clientes e gerencie seus aluguéis de forma profissional e organizada.</p>
+<a href="usuario.html" class="btn btn-primary btn-lg mt-3">Cadastre seu Equipamento Gratuitamente</a>
+</div>
+</section>
+</main>
+
+<footer class="main-footer bg-secondary-blue text-white pt-5 pb-4">
+<div class="container text-center text-md-start">
+<div class="row">
+<div class="col-md-4 col-lg-5 mb-4">
+<h5 class="logo text-white">Maquinaria <strong>PRO</strong></h5>
+<p class="text-white-50">Trazendo eficiência e confiança para o setor de serviços com máquinas pesadas.</p>
+</div>
+<div class="col-md-4 col-lg-3 mb-4">
+<h6 class="text-uppercase fw-bold mb-3">Navegue</h6>
+<p><a href="busca.html" class="text-white-50 text-decoration-none">Encontrar Equipamento</a></p>
+<p><a href="login.html" class="text-white-50 text-decoration-none">Entrar</a></p>
+<p><a href="cadastro.html" class="text-white-50 text-decoration-none">Cadastrar</a></p>
+<p><a href="#!" class="text-white-50 text-decoration-none">Termos de Uso</a></p>
+</div>
+<div class="col-md-4 col-lg-4 mb-4">
+<h6 class="text-uppercase fw-bold mb-3">Contato</h6>
+<p class="text-white-50">contato@maquinariapro.com.br</p>
+<p class="text-white-50">(82) 99999-9999</p>
+<p class="text-white-50">Rua dos Bobos, Número 0, Maceió, Alagoas</p>
+</div>
+</div>
+<div class="text-center text-white-50 border-top border-secondary pt-3 mt-3">
+&copy; 2026 Maquinaria PRO. Todos os direitos reservados.
+</div>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        const destaquesData = [
+            { id: 1, titulo: 'Retroescavadeira CAT 416E', local: 'Maceió, AL', preco: '180,00', infoApoio: 'A partir de', img: 'retroescavadeira.png' },
+            { id: 2, titulo: 'Guindaste Articulado 30T', local: 'Rio Largo, AL', preco: '350,00', infoApoio: 'A partir de', img: 'guindaste.png' },
+            { id: 3, titulo: 'Caminhão Basculante', local: 'Arapiraca, AL', preco: '150,00', infoApoio: 'A partir de', img: 'caminhao.png' },
+            { id: 4, titulo: 'Operador Charles Lisboa', local: 'Maceió, AL', preco: '62,00', infoApoio: 'Trabalho a partir de', img: 'trabalhador.png' },
+            { id: 5, titulo: 'Rolo Compactador Liso', local: 'Maceió, AL', preco: '210,00', infoApoio: 'A partir de', img: 'compactador.png' },
+            { id: 6, titulo: 'Operador Pedro Santos', local: 'Marechal Deodoro, AL', preco: '45,00', infoApoio: 'Trabalho a partir de', img: 'trabalhador3.png' }
+        ];
+
+        let paginaAtual = 1;
+        const limitePorPagina = 3; 
+        let direcaoAnimacao = 'proxima';
+
+        const gridDestaques = document.getElementById('grid-destaques');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+
+        function renderizarDestaques() {
+            gridDestaques.innerHTML = ''; 
+
+            const indexInicio = (paginaAtual - 1) * limitePorPagina;
+            const indexFim = indexInicio + limitePorPagina;
+            const itensDestaPagina = destaquesData.slice(indexInicio, indexFim);
+            const totalPaginas = Math.ceil(destaquesData.length / limitePorPagina);
+
+            const classeAnimacao = direcaoAnimacao === 'proxima' ? 'slide-proxima' : 'slide-anterior';
+
+            itensDestaPagina.forEach(item => {
+                const cardHTML = `
+                    <div class="col-md-6 col-lg-4 ${classeAnimacao}">
+                        <div class="card h-100 shadow-sm border-0 card-hover">
+                            <img src="${item.img}" class="card-img-top" alt="${item.titulo}" style="height: 200px; object-fit: cover;" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Sem+Foto'">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-dark-blue fw-bold">${item.titulo}</h5>
+                                <p class="card-text text-muted small mb-2">📍 ${item.local}</p>
+                                <p class="card-text fs-5 mb-3 mt-auto">${item.infoApoio} <strong class="text-dark-blue">R$ ${item.preco}</strong>/hora</p>
+                                <a href="detalhes.html?id=${item.id}" class="btn btn-secondary mt-auto w-100">Ver Detalhes</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                gridDestaques.innerHTML += cardHTML;
+            });
+
+            btnPrev.style.display = paginaAtual > 1 ? 'flex' : 'none';
+            btnNext.style.display = paginaAtual < totalPaginas ? 'flex' : 'none';
+        }
+
+        btnPrev.addEventListener('click', () => {
+            if (paginaAtual > 1) {
+                direcaoAnimacao = 'anterior';
+                paginaAtual--;
+                renderizarDestaques();
+            }
+        });
+
+        btnNext.addEventListener('click', () => {
+            const totalPaginas = Math.ceil(destaquesData.length / limitePorPagina);
+            if (paginaAtual < totalPaginas) {
+                direcaoAnimacao = 'proxima';
+                paginaAtual++;
+                renderizarDestaques();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', renderizarDestaques);
+    </script>
+</body>
+</html>
