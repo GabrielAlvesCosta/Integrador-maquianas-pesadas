@@ -29,27 +29,55 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h2>Cadastro de Novo Usuário</h2>
-                <form class="registration-form" id="registration-form" action="/cadastro" method="POST">
-
-                    <div class="name">
-                    <label for="name">Nome Completo</label><br>
-                    <input type="text" id="name" name="name" placeholder="Digite seu nome completo" required>
-                    </div><br>
-
-                    <div class="password">
-                    <label for="password">Senha</label><br>
-                    <input type="password" id="password" name="password" placeholder="mínimo 8 caracteres" required>
-                    </div><br>
-
-                    <div class="button">
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <h2>Login de Usuário</h2>
+                <form class="registration-form" id="registration-form" action="/login" method="POST">
+                    <div class="form-card">
+                        <div class="field-group">
+                            <label for="cpf">CPF</label>
+                            <input type="number" id="cpf" name="cpf" placeholder="Digite seu CPF" required>
+                        </div>
+                        <div class="field-group">
+                            <label for="password">Senha</label>
+                            <input type="password" id="password" name="password" placeholder="Mínimo 8 Caracteres" required>
+                        </div>
+                        <div class="button">
+                            <button type="submit" class="btn btn-primary">Entrar</button>
+                        </div>
                     </div>
                 </form>
             </div>
         </section>
 
     </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div>
+                <h4 style="visibility: hidden;">.</h4>
+                <a href="#" class="logo">Maquinaria <strong>PRO</strong></a>
+                <p>Trazendo eficiência e confiança para o setor de serviços com Máquinas pesadas.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>NAVEGUE</h4>
+                <a href="#">Encontrar Equipamento</a>
+                <a href="#">Entrar</a>
+                <a href="#">Cadastrar</a>
+                <a href="#">Termos de Uso</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>CONTATO</h4>
+                <p>contato@maquinariapro.com.br</p>
+                <p>(82) 99999-9999</p>
+                <p>Rua dos Bobos, Número 0, Maceió, Alagoas</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Maquinaria PRO - Todos os direitos reservados</p>
+        </div>
+    </footer>
 
 </body>
 </html>

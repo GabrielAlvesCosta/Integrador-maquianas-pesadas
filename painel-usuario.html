@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style3.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <title>Meu Painel - Maquinaria PRO</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <style>
-        body { font-family: 'Montserrat', sans-serif; background-color: #f8f9fa; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--dark-blue); }
         .navbar-brand.logo { font-weight: 400; color: #333; text-decoration: none; font-size: 1.5rem; }
-        .navbar-brand.logo strong { font-weight: 700; color: #0d6efd; }
         
         /* Estilo das Abas */
         .nav-pills .nav-link { color: #495057; font-weight: 600; transition: 0.3s; margin-bottom: 8px; }
@@ -24,8 +26,11 @@
         
         /* Foto de Perfil */
         .profile-img-container { position: relative; width: 130px; height: 130px; margin: 0 auto; }
-        .profile-img-preview { width: 130px; height: 130px; object-fit: cover; border-radius: 50%; border: 4px solid #fff; shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .profile-img-preview { width: 130px; height: 130px; object-fit: cover; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .btn-change-photo { position: absolute; bottom: 0; right: 0; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; padding: 0; }
+
+        /* Estilo para campos dinâmicos do perfil */
+        .dynamic-field { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: flex; gap: 10px; align-items: center; }
 
         /* Meus Serviços */
         .service-img-mini { width: 70px; height: 50px; object-fit: cover; border-radius: 6px; }
@@ -46,11 +51,11 @@
 </head>
 <body>
 
-    <header class="bg-white shadow-sm sticky-top mb-4">
-        <nav class="navbar navbar-expand-lg navbar-light container">
+    <header class="main-header bg-white shadow-sm mb-4">
+        <nav class="navbar navbar-expand-lg navbar-light container py-2">
             <a class="navbar-brand logo" href="dashboard.html">Maquinaria <strong>PRO</strong></a>
             <div class="ms-auto d-flex align-items-center">
-                <span class="me-3 d-none d-sm-inline text-muted">Olá, <strong>João Silva</strong></span>
+                <span class="me-3 d-none d-sm-inline text-muted">Olá, <strong id="nomeSaudacaoTop">João Silva</strong></span>
                 <a href="login.html" class="btn btn-outline-danger btn-sm">Sair</a>
             </div>
         </nav>
@@ -73,7 +78,6 @@
                 <div class="tab-content" id="v-pills-tabContent">
                     
                     <div class="tab-pane fade show active" id="content-mensagens" role="tabpanel">
-                        
                         <div id="listaMensagens">
                             <h4 class="fw-bold mb-4">Suas Mensagens</h4>
                             <div class="list-group list-group-flush border rounded shadow-sm">
@@ -110,7 +114,6 @@
                                 <button type="submit" class="btn btn-primary px-4"><i class="bi bi-send"></i></button>
                             </form>
                         </div>
-
                     </div>
 
                     <div class="tab-pane fade" id="content-meus-servicos" role="tabpanel">
@@ -209,16 +212,62 @@
                                 <i class="bi bi-camera"></i>
                             </button>
                         </div>
-                        <form>
+                        <form id="formPerfil">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label fw-600">Nome Completo</label>
-                                    <input type="text" class="form-control" value="João Silva">
+                                    <input type="text" class="form-control" id="perfilNome" value="João Silva">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-600">E-mail</label>
                                     <input type="email" class="form-control" value="joao@email.com">
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-600">CPF <i class="bi bi-lock-fill small text-muted" title="Não pode ser alterado"></i></label>
+                                    <input type="text" class="form-control bg-light" value="123.456.789-00" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-600">Perfil de Usuário</label>
+                                    <select class="form-select">
+                                        <option value="nao">Sou apenas Cliente / Contratante</option>
+                                        <option value="sim">Sou Operador de Máquinas Profissional</option>
+                                    </select>
+                                </div>
+
+                                <hr class="my-4 text-muted">
+
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <label class="form-label fw-600 mb-0">Meus Telefones</label>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="adicionarCampo('containerTelefones', 'tel')">
+                                            <i class="bi bi-plus-lg"></i> Adicionar
+                                        </button>
+                                    </div>
+                                    <div id="containerTelefones">
+                                        <div class="dynamic-field">
+                                            <input type="text" class="form-control" value="(82) 99999-0001" placeholder="(00) 00000-0000">
+                                            <button type="button" class="btn btn-outline-danger border-0" onclick="removerCampo(this)"><i class="bi bi-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <label class="form-label fw-600 mb-0">Meus Endereços</label>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="adicionarCampo('containerEnderecos', 'end')">
+                                            <i class="bi bi-plus-lg"></i> Adicionar
+                                        </button>
+                                    </div>
+                                    <div id="containerEnderecos">
+                                        <div class="dynamic-field">
+                                            <input type="text" class="form-control" value="Rua das Máquinas, 123 - Maceió, AL" placeholder="Endereço completo">
+                                            <button type="button" class="btn btn-outline-danger border-0" onclick="removerCampo(this)"><i class="bi bi-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="my-4 text-muted">
+
                                 <div class="col-md-6">
                                     <label class="form-label fw-600">Nova Senha</label>
                                     <input type="password" class="form-control" placeholder="Digite para alterar">
@@ -228,7 +277,7 @@
                                     <input type="password" class="form-control" placeholder="Repita a senha">
                                 </div>
                                 <div class="col-12 mt-4 text-end">
-                                    <button type="button" class="btn btn-primary px-5 py-2 fw-bold" onclick="alert('Perfil atualizado!')">Salvar Alterações</button>
+                                    <button type="button" class="btn btn-primary px-5 py-2 fw-bold" onclick="salvarPerfil()">Salvar Alterações</button>
                                 </div>
                             </div>
                         </form>
@@ -270,16 +319,41 @@
         </div>
     </div>
 
+    <footer class="main-footer bg-dark text-light py-5 mt-5">
+        <div class="container d-flex justify-content-between flex-wrap gap-4">
+            <div>
+                <a href="#" class="logo text-white text-decoration-none fs-4">Maquinaria <strong>PRO</strong></a>
+                <p class="mt-2 text-white-50" style="max-width: 300px;">Trazendo eficiência e confiança para o setor de serviços com Máquinas pesadas.</p>
+            </div>
+
+            <div class="footer-links d-flex flex-column gap-2">
+                <h5 class="text-white mb-3">NAVEGUE</h5>
+                <a href="#" class="text-white-50 text-decoration-none">Encontrar Equipamento</a>
+                <a href="#" class="text-white-50 text-decoration-none">Entrar</a>
+                <a href="#" class="text-white-50 text-decoration-none">Cadastrar</a>
+                <a href="#" class="text-white-50 text-decoration-none">Termos de Uso</a>
+            </div>
+
+            <div class="footer-links d-flex flex-column gap-2">
+                <h5 class="text-white mb-3">CONTATO</h5>
+                <p class="text-white-50 mb-1">contato@maquinariapro.com.br</p>
+                <p class="text-white-50 mb-1">(82) 99999-9999</p>
+                <p class="text-white-50 mb-1">Rua dos Bobos, Número 0, Maceió, Alagoas</p>
+            </div>
+        </div>
+        <div class="text-center text-white-50 mt-5 pt-3 border-top border-secondary">
+            <p class="mb-0">© 2026 Maquinaria PRO - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // ==========================================
-        // LÓGICA DE MENSAGENS (COM "BANCO DE DADOS" FAKE)
+        // LÓGICA DE MENSAGENS
         // ==========================================
+        let contatoAtual = ''; 
         
-        let contatoAtual = ''; // Guarda com quem estamos conversando no momento
-        
-        // Simulação do banco de dados das conversas
         const conversasDb = {
             'Carlos Lisboa (Operador)': [
                 { tipo: 'recebida', texto: 'Olá João, o caminhão ainda está disponível para amanhã?', tempo: 'Hoje, 09:00' }
@@ -290,7 +364,7 @@
         };
 
         function abrirChat(nomeDoContato) {
-            contatoAtual = nomeDoContato; // Define com quem é a conversa
+            contatoAtual = nomeDoContato;
 
             document.getElementById('listaMensagens').classList.add('d-none');
             document.getElementById('areaChat').classList.remove('d-none');
@@ -298,18 +372,15 @@
             document.getElementById('inputChat').value = '';
 
             const historico = document.getElementById('historicoChat');
-            historico.innerHTML = ''; // Limpa o quadro antes de preencher
+            historico.innerHTML = ''; 
 
-            // Se for alguém novo que não está no banco, cria a lista vazia pra ele
             if (!conversasDb[nomeDoContato]) {
                 conversasDb[nomeDoContato] = [];
             }
 
-            // Lê as mensagens guardadas e desenha na tela
             conversasDb[nomeDoContato].forEach(msg => {
                 let msgHTML = '';
                 if (msg.tipo === 'recebida') {
-                    // Balão branco na esquerda
                     msgHTML = `
                         <div class="d-flex mb-3">
                             <div class="msg-bubble msg-received shadow-sm">
@@ -319,7 +390,6 @@
                         </div>
                     `;
                 } else {
-                    // Balão azul na direita
                     msgHTML = `
                         <div class="d-flex justify-content-end mb-3">
                             <div class="msg-bubble msg-sent shadow-sm">
@@ -332,13 +402,13 @@
                 historico.insertAdjacentHTML('beforeend', msgHTML);
             });
 
-            historico.scrollTop = historico.scrollHeight; // Desce a rolagem
+            historico.scrollTop = historico.scrollHeight; 
         }
 
         function voltarParaLista() {
             document.getElementById('areaChat').classList.add('d-none');
             document.getElementById('listaMensagens').classList.remove('d-none');
-            contatoAtual = ''; // Sai do chat
+            contatoAtual = ''; 
         }
 
         function enviarMensagemChat(event) {
@@ -349,14 +419,12 @@
             
             if(textoMensagem.trim() === '') return; 
 
-            // 1. Salva a mensagem no banco falso, na lista do contato atual
             conversasDb[contatoAtual].push({
                 tipo: 'enviada',
                 texto: textoMensagem,
                 tempo: 'Agora'
             });
 
-            // 2. Desenha o balão na tela
             const novaMensagemHTML = `
                 <div class="d-flex justify-content-end mb-3">
                     <div class="msg-bubble msg-sent shadow-sm">
@@ -375,7 +443,6 @@
         // ==========================================
         // OUTRAS FUNÇÕES DO PAINEL
         // ==========================================
-        
         function previewFoto(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -502,6 +569,46 @@
             } else {
                 finalizar();
             }
+        }
+
+        // ==========================================
+        // FUNÇÕES DA ABA PERFIL (ADICIONAR/REMOVER)
+        // ==========================================
+
+        function adicionarCampo(containerId, tipo) {
+            const container = document.getElementById(containerId);
+            const placeholder = tipo === 'tel' ? '(00) 00000-0000' : 'Endereço completo';
+            
+            const novoCampo = `
+                <div class="dynamic-field">
+                    <input type="text" class="form-control" placeholder="${placeholder}">
+                    <button type="button" class="btn btn-outline-danger border-0" onclick="removerCampo(this)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', novoCampo);
+        }
+
+        function removerCampo(botao) {
+            // Sobe pela estrutura do DOM até achar o container pai que engloba os campos
+            const container = botao.closest('#containerTelefones, #containerEnderecos');
+            
+            // Só permite remover se houver mais de 1 campo no container
+            if (container && container.children.length > 1) {
+                botao.closest('.dynamic-field').remove();
+            } else {
+                alert("Você precisa manter pelo menos um registro.");
+            }
+        }
+
+        function salvarPerfil() {
+            const nome = document.getElementById('perfilNome').value;
+            // Atualiza o nome de saudação no topo da página
+            if (document.getElementById('nomeSaudacaoTop')) {
+                document.getElementById('nomeSaudacaoTop').innerText = nome;
+            }
+            alert('Perfil atualizado com sucesso!');
         }
 
         document.addEventListener('DOMContentLoaded', () => {

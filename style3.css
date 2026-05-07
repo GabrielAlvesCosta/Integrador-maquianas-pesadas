@@ -1,10 +1,9 @@
-/* --- GERAL E VARIÁVEIS --- */
 :root {
     --dark-blue: #1A237E;
-    --secondary-blue: #004D7A; /* NOVA COR */
+    --secondary-blue: #004D7A; 
     --lead-gray: #37474F;
     --accent-gold: #FFB300;
-    --off-white: #FAFAFA; /* COR DE FUNDO SUTIL */
+    --off-white: #FAFAFA; 
     --white: #FFFFFF;
     --border-color: #E0E0E0;
 }
@@ -24,7 +23,6 @@ body, html {
     padding: 0 20px;
 }
 
-/* --- BOTÕES --- */
 .btn {
     display: inline-block;
     padding: 12px 24px;
@@ -59,7 +57,100 @@ body, html {
     color: var(--white);
 }
 
-/* --- HEADER --- */
+.registration-form {
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form-card {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+    display: grid;
+    gap: 0px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+    min-width: 0;
+}
+
+.field-group label {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--dark-blue);
+}
+
+.field-group input,
+.field-group select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 13px;
+    background-color: #fdfdfd;
+    height: 40px;
+    color: var(--lead-gray);
+}
+
+.field-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.field-group select:invalid {
+    color: #757575;
+}
+
+.field-group select option[value=""] {
+    color: #757575;
+}
+
+.file-upload input[type="file"] {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    font-size: 13px;
+}
+
+.field-group input:focus {
+    outline: none;
+    border-color: var(--secondary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 77, 122, 0.12);
+}
+
+.button {
+    text-align: right;
+    margin-top: 6px;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+
 .main-header {
     background-color: var(--white);
     padding: 15px 0;
@@ -120,7 +211,6 @@ body, html {
     text-decoration: none;
 }
 
-/* --- SEÇÃO DE DESTAQUE --- */
 .product-highlight {
     background-color: var(--white);
     padding: 30px 0;
@@ -163,7 +253,6 @@ body, html {
     margin-bottom: 20px;
 }
 
-/* --- HERO SECTION --- */
 .hero {
     background-color: var(--dark-blue);
     color: var(--white);
@@ -175,8 +264,6 @@ body, html {
     font-size: 42px;
     margin-bottom: 15px;
 }
-
-/* ... (O restante do CSS para .hero p, .search-form, etc., permanece o mesmo) ... */
 
 .hero p {
     font-size: 18px;
@@ -204,7 +291,6 @@ body, html {
     font-size: 16px;
 }
 
-/* --- SEÇÕES DE CONTEÚDO --- */
 .trust-features, .featured-equipment, .cta-operators {
     padding: 60px 0;
 }
@@ -230,7 +316,6 @@ body, html {
     margin-bottom: 10px;
 }
 
-/* --- EQUIPAMENTOS EM DESTAQUE --- */
 .featured-equipment {
     background-color: var(--white);
     padding-top: 60px;
@@ -262,8 +347,6 @@ body, html {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 }
-
-/* ... (O restante do CSS para .equipment-card permanece o mesmo) ... */
 
 .equipment-card img {
     width: 100%;
@@ -301,7 +384,6 @@ body, html {
     text-align: center;
 }
 
-/* --- CTA OPERADORES --- */
 .cta-operators {
     background-color: var(--dark-blue);
     color: var(--white);
@@ -317,9 +399,8 @@ body, html {
     margin: 15px auto 30px auto;
 }
 
-/* --- FOOTER --- */
 .main-footer {
-    background-color: var(--secondary-blue); /* COR ATUALIZADA */
+    background-color: var(--secondary-blue); 
     color: var(--off-white);
     padding-top: 50px;
 }
@@ -353,7 +434,6 @@ body, html {
     font-size: 14px;
 }
 
-/* --- AJUSTES PARA TELAS MENORES (RESPONSIVIDADE) --- */
 @media (max-width: 768px) {
     .highlight-container {
         grid-template-columns: 1fr; /* Colunas empilhadas */
@@ -367,4 +447,19 @@ body, html {
     .search-form {
         flex-direction: column;
     }
+}
+.main-footer h4 {
+    margin-bottom: 15px;
+    color: var(--white);
+    font-size: 16px;
+}
+
+.main-footer p {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.footer-links p {
+    margin-bottom: 8px;
 }
