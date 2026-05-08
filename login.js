@@ -1,26 +1,25 @@
+// login.js
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('login-form');
     const cpfInput = document.getElementById('cpf');
     const senhaInput = document.getElementById('password');
     const mensagemLogin = document.getElementById('login-message');
 
+    // Se já estiver logado, manda direto pro painel
+    if (DB.getUsuarioLogado()) {
+        window.location.replace('painel-usuario.html');
+    }
+
     function validaCPF(cpf) {
         cpf = cpf.replace(/\D/g, '');
-        if (cpf.length !== 11 || /^([0-9])\1{10}$/.test(cpf)) {
-            return false;
-        }
-        let soma = 0;
-        let resto;
-        for (let i = 1; i <= 9; i++) {
-            soma += parseInt(cpf.substring(i - 1, i), 10) * (11 - i);
-        }
+        if (cpf.length !== 11 || /^([0-9])\1{10}$/.test(cpf)) return false;
+        let soma = 0, resto;
+        for (let i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i - 1, i), 10) * (11 - i);
         resto = (soma * 10) % 11;
         if (resto === 10 || resto === 11) resto = 0;
         if (resto !== parseInt(cpf.substring(9, 10), 10)) return false;
         soma = 0;
-        for (let i = 1; i <= 10; i++) {
-            soma += parseInt(cpf.substring(i - 1, i), 10) * (12 - i);
-        }
+        for (let i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i - 1, i), 10) * (12 - i);
         resto = (soma * 10) % 11;
         if (resto === 10 || resto === 11) resto = 0;
         if (resto !== parseInt(cpf.substring(10, 11), 10)) return false;
@@ -35,14 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const senha = senhaInput.value.trim();
         const erros = [];
 
-        if (cpf === '') {
-            erros.push('O campo CPF é obrigatório.');
-        } else if (!validaCPF(cpf)) {
-            erros.push('CPF inválido. Digite 11 números válidos.');
-        }
-        if (senha === '') {
-            erros.push('O campo Senha é obrigatório.');
-        }
+        if (cpf === '') erros.push('O campo CPF é obrigatório.');
+        else if (!validaCPF(cpf)) erros.push('CPF inválido.');
+        
+        if (senha === '') erros.push('O campo Senha é obrigatório.');
 
         if (erros.length > 0) {
             mensagemLogin.innerHTML = erros.join('<br>');
@@ -66,12 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Sucesso
         localStorage.setItem('loggedInUserCPF', cpfApenasNumeros);
-        mensagemLogin.textContent = 'Login bem-sucedido! Redirecionando para o Painel de Usuário...';
+        mensagemLogin.textContent = 'Login bem-sucedido! Redirecionando...';
         mensagemLogin.style.color = 'green';
 
         setTimeout(() => {
-            window.location.href = 'painel-usuario.html';
+            window.location.replace('painel-usuario.html');
         }, 800);
     });
 
