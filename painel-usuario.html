@@ -17,9 +17,23 @@
         .navbar-brand.logo { font-weight: 400; color: #333; text-decoration: none; font-size: 1.5rem; }
         
         /* Estilo das Abas */
-        .nav-pills .nav-link { color: #495057; font-weight: 600; transition: 0.3s; margin-bottom: 8px; }
-        .nav-pills .nav-link.active { background-color: #0d6efd; color: white; }
-        .nav-link:hover { background-color: #e9ecef; }
+        /* Estilo das Abas */
+.nav-pills .nav-link { 
+    color: var(--accent-gold); /* Muda a cor das letras inativas para dourado */
+    font-weight: 600; 
+    transition: 0.3s; 
+    margin-bottom: 8px; 
+}
+
+.nav-pills .nav-link.active { 
+    background-color: #0d6efd; /* Mantém o fundo azul no item ativo */
+    color: var(--accent-gold); /* Se preferir manter o texto ativo branco, mude aqui de volta para 'white' */
+}
+
+.nav-link:hover { 
+    background-color: #e9ecef; 
+    color: var(--dark-blue); /* Sugestão: muda a cor do texto no hover para não ficar dourado no fundo claro */
+}
 
         /* Conteúdo do Painel */
         .tab-content { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); min-height: 500px; }

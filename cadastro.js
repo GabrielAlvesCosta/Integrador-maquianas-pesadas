@@ -1,130 +1,115 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("registration-form");
 
-    form.addEventListener("submit", function(event) {
-        // 1. Impede que a página recarregue ao clicar em "Cadastrar"
-        event.preventDefault(); 
-
-        // 2. Captura os valores digitados nos campos
-        const name = document.getElementById("name").value;
-        const cpf = document.getElementById("cpf").value;
-        const email = document.getElementById("email").value;
-        const telefone = document.getElementById("telefone").value;
-        const endereco = document.getElementById("endereco").value;
-        const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirm-password").value;
-        const operated = document.getElementById("operated").value;
-        const photoInput = document.getElementById("photo");
-
-        function validaSenha(senha) {
-
-    if (senha.length < 8) return false;
-
-    if (!/[a-z]/.test(senha)) return false;
-
-    if (!/[A-Z]/.test(senha)) return false;
-
-    if (!/[0-9]/.test(senha)) return false;
-
-    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(senha)) return false;
-
-    return true;
-
-}function validaEmail(email) {
-
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    return regex.test(email);
-
-}function validaCPF(cpf) {
-
-    cpf = cpf.replace(/[^\d]+/g, '');
-
-    if (cpf.length !== 11) return false;
-
-    if (/^(\d)\1+$/.test(cpf)) return false;
-
-    let soma = 0;
-
-    let resto;
-
-    for (let i = 1; i <= 9; i++) {
-
-        soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
-
-    }
-
-    resto = (soma * 10) % 11;
-
-    if ((resto == 10) || (resto == 11)) resto = 0;
-
-    if (resto != parseInt(cpf.substring(9, 10))) return false;
-
-    soma = 0;
-
-    for (let i = 1; i <= 10; i++) {
-
-        soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
-
-    }
-
-    resto = (soma * 10) % 11;
-
-    if ((resto == 10
-        
-        // 3. Validação simples: verifica se as senhas batem
-        if (password !== confirmPassword) {
-            alert("As senhas não coincidem. Por favor, tente novamente.");
-            return; // Para a execução do código aqui
+    function validaCPF(cpf) {
+        cpf = cpf.replace(/\D/g, '');
+        if (cpf.length !== 11 || /^([0-9])\1{10}$/.test(cpf)) {
+            return false;
         }
+        let soma = 0;
+        let resto;
+        for (let i = 1; i <= 9; i++) {
+            soma += parseInt(cpf.substring(i - 1, i), 10) * (11 - i);
+        }
+        resto = (soma * 10) % 11;
+        if (resto === 10 || resto === 11) resto = 0;
+        if (resto !== parseInt(cpf.substring(9, 10), 10)) return false;
+        soma = 0;
+        for (let i = 1; i <= 10; i++) {
+            soma += parseInt(cpf.substring(i - 1, i), 10) * (12 - i);
+        }
+        resto = (soma * 10) % 11;
+        if (resto === 10 || resto === 11) resto = 0;
+        if (resto !== parseInt(cpf.substring(10, 11), 10)) return false;
+        return true;
+    }
 
-        // Função interna para montar os dados, salvar e mudar de tela
-        const salvarERedirecionar = (fotoEmBase64) => {
-            
-            // Cria um "objeto" com todos os dados do usuário
-            const novoUsuario = {
-                nome: name,
-                cpf: cpf,
-                email: email,
-                telefone: telefone,
-                endereco: endereco,
-                senha: password, // NOTA: Em sistemas reais, nunca salvamos a senha aberta assim! Mas para o protótipo, tudo bem.
-                operador: operated,
-                foto: fotoEmBase64
-            };
+    function validaSenha(senha) {
+        return senha.length >= 8 &&
+            /[a-z]/.test(senha) &&
+            /[A-Z]/.test(senha) &&
+            /[0-9]/.test(senha) &&
+            /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(senha);
+    }
 
-            // Puxa a lista de usuários que já existe no navegador (se não existir, cria uma lista vazia [])
-            let usuariosCadastrados = JSON.parse(localStorage.getItem("usuariosMaquinaria")) || [];
-            
-            // Verifica se já existe alguém com esse e-mail
-            const emailJaExiste = usuariosCadastrados.find(user => user.email === email);
-            if (emailJaExiste) {
-                alert("Este e-mail já está cadastrado! Tente fazer login.");
-                return;
+    function validaEmail(email) {
+        return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+    }
+
+    function validaTelefone(telefone) {
+        const digitos = telefone.replace(/\D/g, '');
+        return digitos.length === 11;
+    }
+
+    function validaNomeCompleto(nome) {
+        const conectores = ['da', 'de', 'do', 'dos', 'das', 'e'];
+        const partes = nome.trim().split(' ').filter(Boolean);
+        if (partes.length < 2) return false;
+        return partes.every(palavra => {
+            if (conectores.includes(palavra.toLowerCase())) {
+                return true;
             }
+            return /^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$/.test(palavra);
+        });
+    }
 
-            // Adiciona o novo usuário na lista e salva de volta no navegador
-            usuariosCadastrados.push(novoUsuario);
-            localStorage.setItem("usuariosMaquinaria", JSON.stringify(usuariosCadastrados));
+    function validaEndereco(endereco) {
+        const enderecoTrim = endereco.trim();
+        return enderecoTrim.length >= 8 && /\d/.test(enderecoTrim);
+    }
 
-            // Avisa que deu certo e redireciona
-            alert("Cadastro realizado com sucesso! Levando você para o login...");
-            
-            // Redireciona para a página de login (certifique-se de que o arquivo se chama exatamente login.html)
-            window.location.href = "login.html"; 
-        };
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nome = document.getElementById("name").value.trim();
+        const cpf = document.getElementById("cpf").value.replace(/\D/g, "");
+        const email = document.getElementById("email").value.trim();
+        const telefone = document.getElementById("telefone").value.trim();
+        const endereco = document.getElementById("endereco").value.trim();
+        const senha = document.getElementById("password").value.trim();
+        const confirmarSenha = document.getElementById("confirm-password").value.trim();
 
-        // 4. Lógica para salvar a imagem (se o usuário tiver escolhido uma)
-        if (photoInput.files && photoInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                // Se leu a imagem com sucesso, chama a função passando a imagem
-                salvarERedirecionar(e.target.result); 
-            };
-            reader.readAsDataURL(photoInput.files[0]);
-        } else {
-            // Se não enviou foto, chama a função passando vazio
-            salvarERedirecionar(""); 
+        const erros = [];
+        if (nome === '' || !validaNomeCompleto(nome)) {
+            erros.push('Informe seu nome completo corretamente (nome e sobrenome com inicial maiúscula).');
         }
+        if (!validaCPF(cpf)) {
+            erros.push('CPF inválido. Digite 11 números válidos.');
+        } else if (localStorage.getItem(cpf)) {
+            erros.push('Este CPF já está cadastrado.');
+        }
+        if (!validaEmail(email)) {
+            erros.push('E-mail inválido.');
+        }
+        if (!validaTelefone(telefone)) {
+            erros.push('Telefone inválido. Use o DDD e o número com 11 dígitos.');
+        }
+        if (!validaEndereco(endereco)) {
+            erros.push('Endereço inválido. Informe rua/avenida e número.');
+        }
+        if (!validaSenha(senha)) {
+            erros.push('Senha fraca. Use mínimo 8 caracteres, incluindo maiúscula, minúscula, número e símbolo.');
+        }
+        if (senha !== confirmarSenha) {
+            erros.push('As senhas não coincidem.');
+        }
+
+        if (erros.length > 0) {
+            alert(erros.join('\n'));
+            return;
+        }
+
+        const userData = {
+            nome,
+            cpf,
+            email,
+            telefone,
+            endereco,
+            senha
+        };
+        localStorage.setItem(cpf, JSON.stringify(userData));
+        localStorage.setItem('lastRegisteredCPF', cpf);
+
+        alert('Cadastro realizado com sucesso! Agora faça o login.');
+        window.location.href = 'login.html';
     });
 });
