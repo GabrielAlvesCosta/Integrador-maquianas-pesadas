@@ -102,14 +102,34 @@ document.addEventListener("DOMContentLoaded", () => {
             nome,
             cpf,
             email,
-            telefone,
-            endereco,
-            senha
+            // Convertendo telefone e endereco para arrays, para bater com a lógica do seu Painel!
+            telefones: [telefone], 
+            enderecos: [endereco],
+            senha,
+            tipo: document.getElementById("operated").value || 'nao' // Pega o select de operador
         };
-        localStorage.setItem(cpf, JSON.stringify(userData));
-        localStorage.setItem('lastRegisteredCPF', cpf);
 
-        alert('Cadastro realizado com sucesso! Agora faça o login.');
-        window.location.href = 'login.html';
+        const fileInput = document.getElementById("photo");
+
+        // Função para finalizar o cadastro
+        const finalizarCadastro = (dadosParaSalvar) => {
+            localStorage.setItem(cpf, JSON.stringify(dadosParaSalvar));
+            localStorage.setItem('lastRegisteredCPF', cpf);
+            alert('Cadastro realizado com sucesso! Agora faça o login.');
+            window.location.href = 'login.html';
+        };
+
+        // Verifica se o usuário anexou uma foto
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                userData.foto = e.target.result; // Salva a imagem em base64 no userData
+                finalizarCadastro(userData);
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            // Se não enviou foto, salva sem foto mesmo
+            finalizarCadastro(userData);
+        }
     });
 });
