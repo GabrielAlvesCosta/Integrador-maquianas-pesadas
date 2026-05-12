@@ -65,16 +65,25 @@
 </head>
 <body>
 
-    <header class="main-header bg-white shadow-sm mb-4">
-        <nav class="navbar navbar-expand-lg navbar-light container py-2">
-            <a class="logo" href="dashboard.html">Maquinaria <strong>PRO</strong></a>
-            <div class="ms-auto d-flex align-items-center">
-                <h2>Bem-vindo, <span id="user-display-name">Usuário</span>!</h2>
-                <button onclick="DB.logout()" class="btn btn-outline-danger btn-sm">Sair</button>
+    <header class="main-header sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand logo" href="dashboard.html">Maquinaria <strong>PRO</strong></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="busca.html"><strong>Encontrar Serviços</a></strong></li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <h2>Bem-vindo, <span id="user-display-name">Usuário</span>!</h2>
+                        <button onclick="DB.logout()" class="btn btn-outline-danger btn-sm">Sair</button>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
-
     <main class="container py-4">
         <div class="row">
             
@@ -131,41 +140,21 @@
                     </div>
 
                     <div class="tab-pane fade" id="content-meus-servicos" role="tabpanel">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h4 class="fw-bold mb-0">Meus Serviços Postados</h4>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table align-middle">
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Status</th>
-                                        <th>Preço/h</th>
-                                        <th class="text-end">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabelaMeusServicos">
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <img src="retroescavadeira.png" class="service-img-mini img-servico me-3" onerror="this.src='https://via.placeholder.com/70x50?text=Maq'">
-                                                <div>
-                                                    <div class="fw-bold titulo-servico">Retroescavadeira CAT 416E</div>
-                                                    <small class="text-muted subtitulo-servico">Máquinas > Escavadeiras</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-success-subtle text-success">Ativo</span></td>
-                                        <td class="preco-servico">R$ 180,00</td>
-                                        <td class="text-end">
-                                            <button class="btn btn-sm btn-outline-primary me-1" onclick="abrirEdicao(this)"><i class="bi bi-pencil"></i></button>
-                                            <button class="btn btn-sm btn-outline-danger" onclick="excluirServico(this)"><i class="bi bi-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+    <h4 class="fw-bold mb-4">Meus Serviços Anunciados</h4>
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Serviço / Equipamento</th>
+                    <th>Status / Relevância</th>
+                    <th>Preço (Hora)</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaMeusServicos"></tbody>
+        </table>
+    </div>
+</div>
 
                     <div class="tab-pane fade" id="content-salvos" role="tabpanel">
                         <h4 class="fw-bold mb-4">Serviços Salvos</h4>
@@ -190,6 +179,17 @@
                                     <label class="form-label fw-600">Categoria</label>
                                     <select class="form-select" id="catNovo"></select>
                                 </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="relevanciaNovo" class="form-label fw-bold">Relevância do Anúncio</label>
+                                    <select class="form-select" id="relevanciaNovo" required>
+                                        <option value="Normal">Normal</option>
+                                        <option value="Alta">Alta</option>
+                                        <option value="Muito Alto">Muito Alto</option>
+                                        <option value="Premium">Premium</option>
+                                        <option value="Principal">Principal</option>
+                                        <option value="Principal Premium">Principal Premium</option>
+                                    </select>
+                                </div>
                                 <div class="col-12">
                                     <label class="form-label fw-600">Título do Anúncio</label>
                                     <input type="text" class="form-control" id="novoTitulo" placeholder="Ex: Guindaste de 30 toneladas" required>
@@ -198,16 +198,16 @@
                                     <label class="form-label fw-600">Preço por Hora (R$)</label>
                                     <input type="number" step="0.01" class="form-control" id="novoPreco" placeholder="0.00" required>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label fw-600">Localização</label>
-                                    <input type="text" class="form-control" placeholder="Ex: Arapiraca, AL" required>
-                                </div>
+                                <div class="col-md-6 mb-3">
+    <label for="novoLocalizacao" class="form-label fw-bold">Localização</label>
+    <input type="text" class="form-control" id="novoLocalizacao" placeholder="Ex: Maceió - AL" required>
+</div>
+                                <div class="col-12 mb-3">
+    <label for="novoDescricao" class="form-label fw-bold">Descrição do Serviço</label>
+    <textarea class="form-control" id="novoDescricao" rows="3" placeholder="Detalhes sobre o equipamento..." required></textarea>
+</div>
                                 <div class="col-12">
-                                    <label class="form-label fw-600">Descrição</label>
-                                    <textarea class="form-control" rows="3" placeholder="Detalhes técnicos, disponibilidade..." required></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label fw-600">Foto do Equipamento</label>
+                                    <label class="form-label fw-600">Foto</label>
                                     <input type="file" class="form-control" id="novoArquivo" accept="image/*">
                                 </div>
                                 <div class="col-12 mt-4">
@@ -302,36 +302,73 @@
         </div>
     </main>
 
-    <div class="modal fade" id="modalEditarServico" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title fw-bold">Editar Anúncio</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formEdicao">
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold">Título</label>
-                            <input type="text" class="form-control" id="editTitulo">
+   <div class="modal fade" id="modalEditarServico" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Editar Informações do Serviço</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarServico">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Título do Anúncio</label>
+                            <input type="text" class="form-control" id="editTitulo" required>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold">Preço Hora (R$)</label>
-                            <input type="number" step="0.01" class="form-control" id="editPreco">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Preço por Hora (R$)</label>
+                            <input type="number" step="0.01" class="form-control" id="editPreco" required>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold">Alterar Foto (Opcional)</label>
-                            <input type="file" class="form-control" id="editArquivo" accept="image/*">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-muted">Tipo de Serviço (Não alterável)</label>
+                            <input type="text" class="form-control bg-light" id="editTipo" disabled>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="salvarEdicao()">Salvar Mudanças</button>
-                </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-muted">Categoria (Não alterável)</label>
+                            <input type="text" class="form-control bg-light" id="editCategoria" disabled>
+                        </div>
+                        <div class="col-md-6">
+    <label class="form-label fw-bold">Relevância</label>
+    <select class="form-select" id="editRelevancia"> <option value="Normal">Normal</option>
+        <option value="Alta">Alta</option>
+        <option value="Muito Alto">Muito Alto</option>
+        <option value="Premium">Premium</option>
+        <option value="Principal">Principal</option>
+        <option value="Principal Premium">Principal Premium</option>
+    </select>
+</div>
+<div class="col-md-6">
+    <label class="form-label fw-bold">Status do Anúncio</label>
+    <select class="form-select" id="editStatus"> <option value="Ativo">Ativo</option>
+        <option value="Em Uso">Em Uso</option>
+    </select>
+</div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Localização</label>
+                            <input type="text" class="form-control" id="editLocalizacao" placeholder="Ex: Maceió - AL" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Descrição do Serviço</label>
+                            <textarea class="form-control" id="editDescricao" rows="3" placeholder="Detalhes sobre o equipamento ou serviço..." required></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold">Alterar Foto</label>
+                            <input type="file" class="form-control" id="editArquivo" accept="image/*" onchange="previewFotoEdicao(this)">
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            <img src="" id="editPreviewFoto" class="img-thumbnail" style="max-height: 120px;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-header border-0 justify-content-end">
+                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="salvarEdicao()">Salvar Alterações</button>
             </div>
         </div>
     </div>
+</div>
 
     <footer class="main-footer bg-secondary-blue text-white py-5 mt-5">
         <div class="container d-flex justify-content-between flex-wrap gap-4">
