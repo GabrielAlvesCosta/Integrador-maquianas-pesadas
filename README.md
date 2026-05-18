@@ -24,12 +24,14 @@ Manipulação com JavaScript
 Organização de arquivos
 Criação de interfaces responsivas
 Simulação de funcionalidades reais de mercado
+
 3. TECNOLOGIAS UTILIZADAS
 Tecnologia	Finalidade
 HTML5	Estrutura das páginas
 CSS3	Estilização e responsividade
 JavaScript	Funcionalidades e interatividade
 VS Code	Ambiente de desenvolvimento
+
 4. ESTRUTURA DO PROJETO
 📦 maquinaria-pro
 │
@@ -76,6 +78,7 @@ VS Code	Ambiente de desenvolvimento
     ├── dashboard.html
     ├── busca.html
     └── detalhes.html
+
 5. FUNCIONALIDADES DO SISTEMA
 🔐 Sistema de Login
 Login com CPF e senha
@@ -114,6 +117,7 @@ Formulários centralizados
 Botões estilizados
 Rodapé institucional
 Cards de equipamentos
+
 7. COMO EXECUTAR O PROJETO
 1️⃣ Clonar o repositório
 git clone https://github.com/GabrielAlvesCosta/Integrador-Maquinaria-Pro
@@ -140,6 +144,7 @@ Estruturação de sistemas web
 Programação JavaScript
 UX/UI
 Organização de projetos
+
 9. MELHORIAS FUTURAS
 Integração com banco de dados real
 Sistema de autenticação seguro
@@ -148,6 +153,7 @@ Painel administrativo completo
 Sistema de anúncios de máquinas
 Filtros avançados de busca
 Responsividade mobile aprimorada
+
 10. CONCLUSÃO
 
 O projeto Maquinaria PRO representa uma aplicação prática dos conceitos estudados durante o curso, permitindo o desenvolvimento de habilidades em criação de sistemas web organizados, modernos e escaláveis.
