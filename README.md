@@ -71,6 +71,7 @@ VS Code	Ambiente de desenvolvimento
 |
 
 ├── 📂 script
+
 |   ├── main.js
 
 |   ├── login.js
