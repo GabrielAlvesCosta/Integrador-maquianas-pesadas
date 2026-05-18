@@ -3,22 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maquinaria PRO - Conexão Confiável (Bootstrap)</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="style3.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Meu Painel - Maquinaria PRO</title>
     
-    <link rel="stylesheet" href="style1.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--dark-blue); }
+        .navbar-brand.logo { font-weight: 400; color: #333; text-decoration: none; font-size: 1.5rem; }
+        
+        /* Estilo das Abas */
+        /* Estilo das Abas */
+.nav-pills .nav-link { 
+    color: var(--accent-gold); /* Muda a cor das letras inativas para dourado */
+    font-weight: 600; 
+    transition: 0.3s; 
+    margin-bottom: 8px; 
+}
+
+.nav-pills .nav-link.active { 
+    background-color: #0d6efd; /* Mantém o fundo azul no item ativo */
+    color: var(--accent-gold); /* Se preferir manter o texto ativo branco, mude aqui de volta para 'white' */
+}
+
+.nav-link:hover { 
+    background-color: #e9ecef; 
+    color: var(--dark-blue); /* Sugestão: muda a cor do texto no hover para não ficar dourado no fundo claro */
+}
+
+        /* Conteúdo do Painel */
+        .tab-content { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); min-height: 500px; }
+        
+        /* Foto de Perfil */
+        .profile-img-container { position: relative; width: 130px; height: 130px; margin: 0 auto; }
+        .profile-img-preview { width: 130px; height: 130px; object-fit: cover; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .btn-change-photo { position: absolute; bottom: 0; right: 0; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; padding: 0; }
+
+        /* Estilo para campos dinâmicos do perfil */
+        .dynamic-field { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: flex; gap: 10px; align-items: center; }
+
+        /* Meus Serviços */
+        .service-img-mini { width: 70px; height: 50px; object-fit: cover; border-radius: 6px; }
+        .table thead { background-color: #f1f3f5; }
+        
+        /* Responsividade */
+        @media (max-width: 991px) {
+            .nav-pills { flex-direction: row !important; overflow-x: auto; white-space: nowrap; margin-bottom: 20px; }
+            .nav-pills .nav-link { margin-right: 10px; margin-bottom: 0; }
+        }
+
+        /* Estilos do Chat */
+        .chat-box { height: 350px; overflow-y: auto; background-image: url('https://www.transparenttextures.com/patterns/always-grey.png'); }
+        .msg-bubble { max-width: 75%; border-radius: 12px; padding: 10px 15px; font-size: 0.9rem; }
+        .msg-received { background-color: #fff; border: 1px solid #e9ecef; border-top-left-radius: 0; }
+        .msg-sent { background-color: #0d6efd; color: white; border-top-right-radius: 0; }
+    </style>
 </head>
 <body>
 
     <header class="main-header sticky-top">
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand logo" href="dashboard.html">Maquinaria <strong>PRO</strong></a>
+                <a class="navbar-brand logo" href="index.html">Maquinaria <strong>PRO</strong></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -27,171 +77,334 @@
                         <li class="nav-item"><a class="nav-link" href="busca.html"><strong>Encontrar Serviços</a></strong></li>
                     </ul>
                     <div class="d-flex align-items-center">
-                        <a href="cadastro.html" class="login-btn text-decoration-none me-3">Cadastrar</a>
-                        <a href="login.html" class="btn btn-primary">Login</a>
+                        <h2>Bem-vindo, <span id="user-display-name">Usuário</span>!</h2>
+                        <button onclick="DB.logout()" class="btn btn-outline-danger btn-sm">Sair</button>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
-
-    <main>
-        <section class="product-highlight bg-white py-4 border-bottom">
-            <div class="container">
-                <div class="row align-items-center g-4">
-                    <div class="col-lg-5">
-                        <img src="propaganda.png" alt="Equipamento em destaque" class="img-fluid rounded">
-                    </div>
-                    <div class="col-lg-7">
-                        <span class="badge highlight-badge mb-2">OFERTA DO MÊS</span>
-                        <h2 class="display-6 fw-bold text-dark-blue">Escavadeira Hidráulica 20T com Operador Certificado</h2>
-                        <p class="lead fs-6">Ideal para grandes terraplanagens e fundações. Garanta eficiência e segurança com disponibilidade imediata para projetos em <strong>Maceió e região</strong>.</p>
-                        <a href="#" class="btn btn-secondary">Verificar Preços e Agendar</a>
-                    </div>
+    <main class="container py-4">
+        <div class="row">
+            
+            <div class="col-lg-3">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active text-start" id="tab-mensagens" data-bs-toggle="pill" data-bs-target="#content-mensagens" type="button" role="tab"><i class="bi bi-chat-dots me-2"></i> Mensagens</button>
+                    <button class="nav-link text-start" id="tab-meus-servicos" data-bs-toggle="pill" data-bs-target="#content-meus-servicos" type="button" role="tab"><i class="bi bi-briefcase me-2"></i> Meus Serviços</button>
+                    <button class="nav-link text-start" id="tab-salvos" data-bs-toggle="pill" data-bs-target="#content-salvos" type="button" role="tab"><i class="bi bi-bookmark-heart me-2"></i> Salvos</button>
+                    <button class="nav-link text-start" id="tab-anunciar" data-bs-toggle="pill" data-bs-target="#content-anunciar" type="button" role="tab"><i class="bi bi-plus-circle me-2"></i> Novo Serviço</button>
+                    <button class="nav-link text-start" id="tab-perfil" data-bs-toggle="pill" data-bs-target="#content-perfil" type="button" role="tab"><i class="bi bi-person-gear me-2"></i> Editar Perfil</button>
                 </div>
             </div>
-        </section>
 
-        <section class="hero bg-dark-blue text-white text-center py-5">
-            <div class="container">
-                <h1 class="display-5 fw-bold">A Conexão Confiável para sua Obra</h1>
-                <p class="lead col-md-8 mx-auto">Encontre, compare e alugue máquinas pesadas com operadores verificados. Transparência e segurança do início ao fim do seu projeto.</p>
-                <div class="col-lg-9 mx-auto mt-4">
-                        <a href="busca.html" class="btn btn-primary btn-lg w-100">Buscar</a>
-                </div>
-            </div>
-        </section>
-        
-        <section class="featured-equipment py-5 bg-light">
-            <div class="container">
-                <h2 class="text-center fw-bold text-dark-blue mb-5">Equipamentos e Trabalhadores Populares na sua Região</h2>
-                
-                <div class="position-relative" id="container-carrossel">
+            <div class="col-lg-9">
+                <div class="tab-content" id="v-pills-tabContent">
                     
-                    <button id="btn-prev" class="btn btn-primary btn-navegacao position-absolute top-50 start-0 translate-middle-y shadow" style="display: none; left: 10px !important;">&#10094;</button>
+                    <div class="tab-pane fade show active" id="content-mensagens" role="tabpanel">
+                        <div class="list-group w-100" id="listaMensagens">
+    
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onclick="abrirChat(this, 'Carlos Lisboa (Operador)')">
+        <div>
+            <h6 class="mb-0 fw-bold">Carlos Lisboa (Operador)</h6>
+            <small class="text-muted">Olá João, o caminhão ainda está disponível para amanhã?</small>
+        </div>
+        <span class="badge bg-danger rounded-pill unread-badge">1</span>
+    </a>
 
-                    <div class="row g-4" id="grid-destaques">
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onclick="abrirChat(this, 'Maria Construtora')">
+        <div>
+            <h6 class="mb-0 fw-bold">Maria Construtora</h6>
+            <small class="text-muted">Gostaria de fechar o guindaste para o fim de semana.</small>
+        </div>
+        <span class="badge bg-danger rounded-pill unread-badge">1</span>
+    </a>
+
+</div>
+
+                        <div id="areaChat" class="d-none">
+                            <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="voltarParaLista()"><i class="bi bi-arrow-left"></i> Voltar</button>
+                                <h5 class="fw-bold mb-0" id="nomeContatoChat">Nome do Contato</h5>
+                                <div style="width: 70px;"></div>
+                            </div>
+                            
+                            <div class="chat-box bg-light rounded p-3 mb-3 border" id="historicoChat">
+                                </div>
+                            
+                            <form id="formChat" onsubmit="enviarMensagemChat(event)" class="d-flex gap-2">
+                                <input type="text" class="form-control" id="inputChat" placeholder="Escreva sua mensagem..." required autocomplete="off">
+                                <button type="submit" class="btn btn-primary px-4"><i class="bi bi-send"></i></button>
+                            </form>
                         </div>
+                    </div>
 
-                    <button id="btn-next" class="btn btn-primary btn-navegacao position-absolute top-50 end-0 translate-middle-y shadow" style="display: none; right: 10px !important;">&#10095;</button>
+                    <div class="tab-pane fade" id="content-meus-servicos" role="tabpanel">
+    <h4 class="fw-bold mb-4">Meus Serviços Anunciados</h4>
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Serviço / Equipamento</th>
+                    <th>Status / Relevância</th>
+                    <th>Preço (Hora)</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaMeusServicos"></tbody>
+        </table>
+    </div>
+</div>
+
+                    <div class="tab-pane fade" id="content-salvos" role="tabpanel">
+                        <h4 class="fw-bold mb-4">Serviços Salvos</h4>
+                        <div class="text-center py-5">
+                            <i class="bi bi-bookmark text-muted display-1"></i>
+                            <p class="mt-3 text-muted">Você ainda não salvou nenhum anúncio.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="content-anunciar" role="tabpanel">
+                        <h4 class="fw-bold mb-4">Publicar Novo Serviço</h4>
+                        <form id="formNovoServico" onsubmit="publicarServico(event)">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-600">Tipo</label>
+                                    <select class="form-select" id="tipoServico" onchange="atualizarCategorias('catNovo', this.value)">
+                                        <option value="maquina">Máquina / Equipamento</option>
+                                        <option value="operador">Operador Profissional</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-600">Categoria</label>
+                                    <select class="form-select" id="catNovo"></select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="relevanciaNovo" class="form-label fw-bold">Relevância do Anúncio</label>
+                                    <select class="form-select" id="relevanciaNovo" required>
+                                        <option value="Normal">Normal</option>
+                                        <option value="Alta">Alta</option>
+                                        <option value="Muito Alto">Muito Alto</option>
+                                        <option value="Premium">Premium</option>
+                                        <option value="Principal">Principal</option>
+                                        <option value="Principal Premium">Principal Premium</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-600">Título do Anúncio</label>
+                                    <input type="text" class="form-control" id="novoTitulo" placeholder="Ex: Guindaste de 30 toneladas" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-600">Preço por Hora (R$)</label>
+                                    <input type="number" step="0.01" class="form-control" id="novoPreco" placeholder="0.00" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+    <label for="novoLocalizacao" class="form-label fw-bold">Localização</label>
+    <input type="text" class="form-control" id="novoLocalizacao" placeholder="Ex: Maceió - AL" required>
+</div>
+                                <div class="col-12 mb-3">
+    <label for="novoDescricao" class="form-label fw-bold">Descrição do Serviço</label>
+    <textarea class="form-control" id="novoDescricao" rows="3" placeholder="Detalhes sobre o equipamento..." required></textarea>
+</div>
+                                <div class="col-12">
+                                    <label class="form-label fw-600">Foto</label>
+                                    <input type="file" class="form-control" id="novoArquivo" accept="image/*">
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-primary px-5 py-2 fw-bold">Publicar Anúncio</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade" id="content-perfil" role="tabpanel">
+    <h4 class="fw-bold mb-4">Meu Perfil</h4>
+    <div class="profile-img-container mb-4">
+        <img src="img/default-user.png" id="perfilFoto" class="profile-img-preview border shadow-sm">
+        <input type="file" id="inputFoto" hidden accept="image/*" onchange="previewFoto(this)">
+        <button type="button" class="btn btn-dark btn-change-photo" onclick="document.getElementById('inputFoto').click()">
+            <i class="bi bi-camera"></i>
+        </button>
+    </div>
+    <form id="formPerfil">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label fw-600">Nome Completo</label>
+                <input type="text" class="form-control" id="perfilNome" value="" placeholder="Seu nome completo">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-600">E-mail</label>
+                <input type="email" class="form-control" id="perfilEmail" placeholder="Seu e-mail de acesso">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-600">CPF <i class="bi bi-lock-fill small text-muted" title="Não pode ser alterado"></i></label>
+                <input type="text" class="form-control bg-light" id="perfilCPF" placeholder="000.000.000-00" readonly>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-600">Perfil de Usuário</label>
+                <select class="form-select" id="perfilTipo">
+                    <option value="nao">Sou apenas Cliente / Contratante</option>
+                    <option value="sim">Sou Operador de Máquinas Profissional</option>
+                </select>
+            </div>
+
+            <hr class="my-4 text-muted">
+
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <label class="form-label fw-600 mb-0">Meus Telefones</label>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="adicionarCampo('containerTelefones', 'tel')">
+                        <i class="bi bi-plus-lg"></i> Adicionar
+                    </button>
+                </div>
+                <div id="containerTelefones">
+                    <div class="dynamic-field">
+                        <input type="text" class="form-control" id="perfilTelefone" placeholder="(00) 00000-0000">
+                        <button type="button" class="btn btn-outline-danger border-0" onclick="removerCampo(this)"><i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <label class="form-label fw-600 mb-0">Meus Endereços</label>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="adicionarCampo('containerEnderecos', 'end')">
+                        <i class="bi bi-plus-lg"></i> Adicionar
+                    </button>
+                </div>
+                <div id="containerEnderecos">
+                    <div class="dynamic-field">
+                        <input type="text" class="form-control" id="perfilEndereco" placeholder="Endereço completo">
+                        <button type="button" class="btn btn-outline-danger border-0" onclick="removerCampo(this)"><i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 text-muted">
+
+            <h5 class="mt-4 mb-3">Alterar Senha</h5>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label for="perfilSenhaAtual" class="form-label">Senha Atual</label>
+        <input type="password" class="form-control" id="perfilSenhaAtual" placeholder="Digite a senha atual">
+    </div>
+    <div class="col-md-4 mb-3">
+        <label for="perfilNovaSenha" class="form-label">Nova Senha</label>
+        <input type="password" class="form-control" id="perfilNovaSenha" placeholder="Mínimo 8 caracteres">
+    </div>
+    <div class="col-md-4 mb-3">
+        <label for="perfilConfirmaSenha" class="form-label">Confirmar Nova Senha</label>
+        <input type="password" class="form-control" id="perfilConfirmaSenha" placeholder="Repita a nova senha">
+    </div>
+</div>
+            <div class="col-12 mt-4 text-end">
+                <button type="button" class="btn btn-primary px-5 py-2 fw-bold" onclick="salvarPerfil()">Salvar Alterações</button>
+            </div>
+        </div>
+    </form>
+</div>
 
                 </div>
             </div>
-        </section>
-
-        <section class="cta-operators bg-dark-blue text-white text-center py-5">
-            <div class="container">
-                <h2 class="fw-bold">É Operador de Máquinas Pesadas?</h2>
-                <p class="lead col-md-8 mx-auto">Aumente sua visibilidade, alcance novos clientes e gerencie seus aluguéis de forma profissional e organizada.</p>
-                <a href="usuario.html" class="btn btn-primary btn-lg mt-3">Cadastre seu Equipamento Gratuitamente</a>
-            </div>
-        </section>
+        </div>
     </main>
 
-    <footer class="main-footer bg-secondary-blue text-white pt-5 pb-4">
-        <div class="container text-center text-md-start">
-            <div class="row">
-                <div class="col-md-4 col-lg-5 mb-4">
-                    <h5 class="logo text-white">Maquinaria <strong>PRO</strong></h5>
-                    <p class="text-white-50">Trazendo eficiência e confiança para o setor de serviços com máquinas pesadas.</p>
-                </div>
-                <div class="col-md-4 col-lg-3 mb-4">
-                    <h6 class="text-uppercase fw-bold mb-3">Navegue</h6>
-                    <p><a href="busca.html" class="text-white-50 text-decoration-none">Encontrar Equipamento</a></p>
-                    <p><a href="login.html" class="text-white-50 text-decoration-none">Entrar</a></p>
-                    <p><a href="cadastro.html" class="text-white-50 text-decoration-none">Cadastrar</a></p>
-                    <p><a href="#!" class="text-white-50 text-decoration-none">Termos de Uso</a></p>
-                </div>
-                <div class="col-md-4 col-lg-4 mb-4">
-                    <h6 class="text-uppercase fw-bold mb-3">Contato</h6>
-                    <p class="text-white-50">contato@maquinariapro.com.br</p>
-                    <p class="text-white-50">(82) 99999-9999</p>
-                    <p class="text-white-50">Rua das Maquinas, Número 1001, Maceió, Alagoas</p>
-                </div>
+   <div class="modal fade" id="modalEditarServico" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Editar Informações do Serviço</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="text-center text-white-50 border-top border-secondary pt-3 mt-3">
-                &copy; 2026 Maquinaria PRO. Todos os direitos reservados.
+            <div class="modal-body">
+                <form id="formEditarServico">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Título do Anúncio</label>
+                            <input type="text" class="form-control" id="editTitulo" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Preço por Hora (R$)</label>
+                            <input type="number" step="0.01" class="form-control" id="editPreco" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-muted">Tipo de Serviço (Não alterável)</label>
+                            <input type="text" class="form-control bg-light" id="editTipo" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-muted">Categoria (Não alterável)</label>
+                            <input type="text" class="form-control bg-light" id="editCategoria" disabled>
+                        </div>
+                        <div class="col-md-6">
+    <label class="form-label fw-bold">Relevância</label>
+    <select class="form-select" id="editRelevancia"> <option value="Normal">Normal</option>
+        <option value="Alta">Alta</option>
+        <option value="Muito Alto">Muito Alto</option>
+        <option value="Premium">Premium</option>
+        <option value="Principal">Principal</option>
+        <option value="Principal Premium">Principal Premium</option>
+    </select>
+</div>
+<div class="col-md-6">
+    <label class="form-label fw-bold">Status do Anúncio</label>
+    <select class="form-select" id="editStatus"> <option value="Ativo">Ativo</option>
+        <option value="Em Uso">Em Uso</option>
+    </select>
+</div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Localização</label>
+                            <input type="text" class="form-control" id="editLocalizacao" placeholder="Ex: Maceió - AL" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Descrição do Serviço</label>
+                            <textarea class="form-control" id="editDescricao" rows="3" placeholder="Detalhes sobre o equipamento ou serviço..." required></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold">Alterar Foto</label>
+                            <input type="file" class="form-control" id="editArquivo" accept="image/*" onchange="previewFotoEdicao(this)">
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            <img src="" id="editPreviewFoto" class="img-thumbnail" style="max-height: 120px;">
+                        </div>
+                    </div>
+                </form>
             </div>
+            <div class="modal-header border-0 justify-content-end">
+                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="salvarEdicao()">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <footer class="main-footer bg-secondary-blue text-white py-5 mt-5">
+        <div class="container d-flex justify-content-between flex-wrap gap-4">
+            <div>
+                <a href="#" class="logo text-white text-decoration-none fs-4">Maquinaria <strong>PRO</strong></a>
+                <p class="mt-2 text-white-50" style="max-width: 300px;">Trazendo eficiência e confiança para o setor de serviços com Máquinas pesadas.</p>
+            </div>
+
+            <div class="footer-links d-flex flex-column gap-2">
+                <h5 class="text-white mb-3">NAVEGUE</h5>
+                <a href="#" class="text-white-50 text-decoration-none">Encontrar Equipamento</a>
+                <a href="#" class="text-white-50 text-decoration-none">Entrar</a>
+                <a href="#" class="text-white-50 text-decoration-none">Cadastrar</a>
+                <a href="#" class="text-white-50 text-decoration-none">Termos de Uso</a>
+            </div>
+
+            <div class="footer-links d-flex flex-column gap-2">
+                <h5 class="text-white mb-3">CONTATO</h5>
+                <p class="text-white-50 mb-1">contato@maquinariapro.com.br</p>
+                <p class="text-white-50 mb-1">(82) 99999-9999</p>
+                <p class="text-white-50 mb-1">Rua dos Bobos, Número 0, Maceió, Alagoas</p>
+            </div>
+        </div>
+        <div class="text-center text-white-50 mt-5 pt-3 border-top border-secondary">
+            <p class="mb-0">© 2026 Maquinaria PRO - Todos os direitos reservados</p>
         </div>
     </footer>
 
     <script src="db.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    <script>
-        // 1. Banco de dados com os destaques da Home (adicionados 2 itens extras para teste)
-        const destaquesData = [
-            { id: 1, titulo: 'Retroescavadeira CAT 416E', local: 'Maceió, AL', preco: '180,00', infoApoio: 'A partir de', img: 'retroescavadeira.png' },
-            { id: 2, titulo: 'Guindaste Articulado 30T', local: 'Rio Largo, AL', preco: '350,00', infoApoio: 'A partir de', img: 'guindaste.png' },
-            { id: 3, titulo: 'Caminhão Basculante', local: 'Arapiraca, AL', preco: '150,00', infoApoio: 'A partir de', img: 'caminhao.png' },
-            { id: 4, titulo: 'Operador Charles Lisboa', local: 'Maceió, AL', preco: '62,00', infoApoio: 'Trabalho a partir de', img: 'trabalhador.png' },
-            { id: 5, titulo: 'Rolo Compactador Liso', local: 'Maceió, AL', preco: '210,00', infoApoio: 'A partir de', img: 'compactador.png' },
-            { id: 6, titulo: 'Operador Pedro Santos', local: 'Marechal Deodoro, AL', preco: '45,00', infoApoio: 'Trabalho a partir de', img: 'trabalhador3.png' }
-        ];
-
-        // 2. Variáveis de controle
-        let paginaAtual = 1;
-        const limitePorPagina = 3; // Limite de 3 para ficar bem distribuído em telas grandes
-        let direcaoAnimacao = 'proxima';
-
-        const gridDestaques = document.getElementById('grid-destaques');
-        const btnPrev = document.getElementById('btn-prev');
-        const btnNext = document.getElementById('btn-next');
-
-        // 3. Função de renderização
-        function renderizarDestaques() {
-            gridDestaques.innerHTML = ''; 
-
-            const indexInicio = (paginaAtual - 1) * limitePorPagina;
-            const indexFim = indexInicio + limitePorPagina;
-            const itensDestaPagina = destaquesData.slice(indexInicio, indexFim);
-            const totalPaginas = Math.ceil(destaquesData.length / limitePorPagina);
-
-            // Define de onde a animação vem (esquerda ou direita)
-            const classeAnimacao = direcaoAnimacao === 'proxima' ? 'slide-proxima' : 'slide-anterior';
-
-            itensDestaPagina.forEach(item => {
-                const cardHTML = `
-                    <div class="col-md-6 col-lg-4 ${classeAnimacao}">
-                        <div class="card h-100 shadow-sm border-0 card-hover">
-                            <img src="${item.img}" class="card-img-top" alt="${item.titulo}" style="height: 200px; object-fit: cover;" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Sem+Foto'">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title text-dark-blue fw-bold">${item.titulo}</h5>
-                                <p class="card-text text-muted small mb-2">📍 ${item.local}</p>
-                                <p class="card-text fs-5 mb-3 mt-auto">${item.infoApoio} <strong class="text-dark-blue">R$ ${item.preco}</strong>/hora</p>
-                                <a href="detalhes.html?id=${item.id}" class="btn btn-secondary mt-auto w-100">Ver Detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                gridDestaques.innerHTML += cardHTML;
-            });
-
-            // Controla a visibilidade dos botões
-            btnPrev.style.display = paginaAtual > 1 ? 'flex' : 'none';
-            btnNext.style.display = paginaAtual < totalPaginas ? 'flex' : 'none';
-        }
-
-        // 4. Ações das setas
-        btnPrev.addEventListener('click', () => {
-            if (paginaAtual > 1) {
-                direcaoAnimacao = 'anterior';
-                paginaAtual--;
-                renderizarDestaques();
-            }
-        });
-
-        btnNext.addEventListener('click', () => {
-            const totalPaginas = Math.ceil(destaquesData.length / limitePorPagina);
-            if (paginaAtual < totalPaginas) {
-                direcaoAnimacao = 'proxima';
-                paginaAtual++;
-                renderizarDestaques();
-            }
-        });
-
-        // 5. Renderizar na inicialização
-        document.addEventListener('DOMContentLoaded', renderizarDestaques);
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="dashboard.js"></script>
 </body>
 </html>

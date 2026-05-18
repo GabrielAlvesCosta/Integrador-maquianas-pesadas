@@ -35,3 +35,36 @@ const DB = {
         window.location.replace('login.html');
     }
 };
+// ==========================================
+// CONTROLE DINÂMICO DO CABEÇALHO (LOGIN/LOGOUT)
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const authContainer = document.getElementById("auth-container");
+    
+    // Se a página atual não tiver o cabeçalho, o script simplesmente ignora e não gera erro
+    if (!authContainer) return;
+
+    const usuarioLogado = DB.getUsuarioLogado();
+
+    if (usuarioLogado) {
+        // USUÁRIO LOGADO: Substitui os botões por "Perfil" e "Sair"
+        // Pega o primeiro nome para uma saudação amigável, se existir
+        const primeiroNome = usuarioLogado.nome ? usuarioLogado.nome.split(' ')[0] : 'Perfil';
+
+        // Atenção: Troque "painel.html" abaixo pelo nome correto do seu arquivo do painel de usuário!
+        authContainer.innerHTML = `
+            <a href="dashboard.html" class="btn btn-primary me-3 text-white text-decoration-none d-flex align-items-center gap-2">
+                <i class="bi bi-person-circle"></i> Olá, ${primeiroNome}
+            </a>
+            <button onclick="DB.logout()" class="btn btn-outline-danger d-flex align-items-center gap-1">
+                <i class="bi bi-box-arrow-right"></i> Sair
+            </button>
+        `;
+    } else {
+        // USUÁRIO DESLOGADO: Mantém o padrão (Cadastrar e Entrar)
+        authContainer.innerHTML = `
+            <a href="cadastro.html" class="nav-link active me-3">Cadastrar</a>
+            <a href="login.html" class="login-btn text-decoration-none me-3">Entrar</a>
+        `;
+    }
+});

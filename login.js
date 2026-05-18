@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Se já estiver logado, manda direto pro painel
     if (DB.getUsuarioLogado()) {
-        window.location.replace('painel-usuario.html');
+        window.location.replace('dashboard.html');
     }
 
     function validaCPF(cpf) {
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mensagemLogin.style.color = 'green';
 
         setTimeout(() => {
-            window.location.replace('painel-usuario.html');
+            window.location.replace('dashboard.html');
         }, 800);
     });
 

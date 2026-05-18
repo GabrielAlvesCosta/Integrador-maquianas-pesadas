@@ -12,8 +12,17 @@ const conversasDb = {
     ]
 };
 
-function abrirChat(nomeDoContato) {
+// O parâmetro 'elementoClicado' foi adicionado para podermos achar o badge
+function abrirChat(elementoClicado, nomeDoContato) {
     contatoAtual = nomeDoContato;
+
+    // Remove a notificação (badge) da tela assim que clicar na conversa
+    if (elementoClicado) {
+        const badgeNotificacao = elementoClicado.querySelector('.unread-badge');
+        if (badgeNotificacao) {
+            badgeNotificacao.classList.add('d-none'); // Oculta o número
+        }
+    }
 
     document.getElementById('listaMensagens').classList.add('d-none');
     document.getElementById('areaChat').classList.remove('d-none');
@@ -43,7 +52,7 @@ function abrirChat(nomeDoContato) {
                 <div class="d-flex justify-content-end mb-3">
                     <div class="msg-bubble msg-sent shadow-sm">
                         <p class="mb-1">${msg.texto}</p>
-                        <small class="text-white-50" style="font-size: 0.7rem;">Agora</small>
+                        <small class="text-white-50" style="font-size: 0.7rem;">${msg.tempo}</small>
                     </div>
                 </div>
             `;
@@ -162,30 +171,31 @@ function publicarServico(event) {
 
     const criarLinhaTabela = (imagemParaUsar) => {
         let corBadgeRel = obtenerClasseRelevancia(relevancia);
-        let corBadgeStatus = obtenerClasseStatus('Ativo'); // Todo serviço novo nasce como 'Ativo'
+        let corBadgeStatus = obtenerClasseStatus('Ativo'); 
 
-        // Adicionado o atributo 'data-status' na TR
         const novaLinhaHTML = `
             <tr data-titulo="${titulo}" data-preco="${preco}" data-tipo="${tipo}" data-categoria="${categoria}" data-relevancia="${relevancia}" data-status="Ativo" data-img="${imagemParaUsar}" data-localizacao="${localizacao}" data-descricao="${descricao}">
-                <td>
-                    <div class="d-flex align-items-start">
+                
+                <td style="width: 60%; max-width: 0;"> 
+                    <div class="d-flex align-items-start w-100">
                         <img src="${imagemParaUsar}" class="service-img-mini img-servico me-3" style="width:70px; height:50px; object-fit:cover; border-radius: 4px;">
                         <div class="w-100">
                             <div class="fw-bold titulo-servico">${titulo}</div>
                             <small class="text-muted d-block subtitulo-servico">${subtitulo}</small>
                             <small class="text-muted d-block mt-1"><i class="bi bi-geo-alt-fill text-danger"></i> <span class="texto-localizacao">${localizacao || 'Não informada'}</span></small>
-                            <div class="mt-2 p-2 bg-light rounded text-secondary" style="font-size: 0.85rem; max-width: 500px;">
+                            
+                            <div class="mt-2 p-2 bg-light rounded text-secondary w-100" style="font-size: 0.85rem; max-height: 100px; overflow-y: auto; overflow-wrap: break-word; word-break: break-word;">
                                 <strong>Descrição:</strong> <span class="texto-descricao">${descricao || 'Sem descrição.'}</span>
                             </div>
                         </div>
                     </div>
                 </td>
-                <td>
+                <td class="align-middle">
                     <span class="badge ${corBadgeStatus} badge-status">Ativo</span>
                     <span class="badge ${corBadgeRel} badge-relevancia d-block mt-1" style="max-width: fit-content;">${relevancia}</span>
                 </td>
-                <td class="preco-servico fw-bold text-nowrap">R$ ${preco.replace('.', ',')}</td>
-                <td class="text-end">
+                <td class="preco-servico fw-bold text-nowrap align-middle">R$ ${preco.replace('.', ',')}</td>
+                <td class="text-end align-middle">
                     <button class="btn btn-sm btn-outline-primary me-1" onclick="abrirEdicao(this)"><i class="bi bi-pencil"></i></button>
                     <button class="btn btn-sm btn-outline-danger" onclick="excluirServico(this)"><i class="bi bi-trash"></i></button>
                 </td>
@@ -387,11 +397,74 @@ function removerCampo(botao) {
 }
 
 function salvarPerfil() {
-    const nome = document.getElementById('perfilNome').value;
-    if (document.getElementById('nomeSaudacaoTop')) {
-        document.getElementById('nomeSaudacaoTop').innerText = nome;
+    const usuarioLogado = DB.getUsuarioLogado();
+    
+    if (!usuarioLogado) {
+        alert("Erro: Nenhum usuário logado encontrado.");
+        return;
     }
-    alert('Perfil updated com sucesso!');
+
+    // 1. Captura os dados básicos
+    const novoNome = document.getElementById('perfilNome').value.trim();
+    const novoEmail = document.getElementById('perfilEmail').value.trim();
+    
+    // Atualiza os dados básicos no objeto
+    usuarioLogado.nome = novoNome;
+    usuarioLogado.email = novoEmail;
+
+    // 2. Lógica de Alteração de Senha
+    const senhaAtual = document.getElementById('perfilSenhaAtual').value;
+    const novaSenha = document.getElementById('perfilNovaSenha').value;
+    const confirmaSenha = document.getElementById('perfilConfirmaSenha').value;
+
+    // Se o usuário digitou algo no campo de nova senha, processamos a troca
+    if (novaSenha !== "") {
+        // Verifica se a senha atual está correta
+        if (senhaAtual !== usuarioLogado.senha) {
+            alert("A senha atual informada está incorreta.");
+            return; // Para a execução e não salva nada
+        }
+
+        // Verifica se as novas senhas coincidem
+        if (novaSenha !== confirmaSenha) {
+            alert("As novas senhas não coincidem. Tente novamente.");
+            return;
+        }
+
+        // Validação de força da senha (mesma regra do seu Cadastro)
+        const validaSenha = (senha) => {
+            return senha.length >= 8 &&
+                /[a-z]/.test(senha) &&
+                /[A-Z]/.test(senha) &&
+                /[0-9]/.test(senha) &&
+                /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(senha);
+        };
+
+        if (!validaSenha(novaSenha)) {
+            alert("A nova senha é fraca. Use mínimo 8 caracteres, incluindo maiúscula, minúscula, número e símbolo.");
+            return;
+        }
+
+        // Se passou por todas as validações, atualiza a senha no objeto
+        usuarioLogado.senha = novaSenha;
+    }
+
+    // 3. Salva o objeto atualizado de volta no "Banco de Dados" (localStorage)
+    // Usamos o CPF como chave, exatamente como é feito no Cadastro
+    localStorage.setItem(usuarioLogado.cpf, JSON.stringify(usuarioLogado));
+
+    // 4. Atualiza a interface visual (Nome no topo)
+    const spanNomeTopo = document.getElementById('user-display-name');
+    if (spanNomeTopo) {
+        spanNomeTopo.innerText = novoNome.split(' ')[0]; // Pega o primeiro nome
+    }
+
+    alert('Perfil atualizado com sucesso!');
+
+    // 5. Limpa os campos de senha por segurança após salvar
+    document.getElementById('perfilSenhaAtual').value = '';
+    document.getElementById('perfilNovaSenha').value = '';
+    document.getElementById('perfilConfirmaSenha').value = '';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
