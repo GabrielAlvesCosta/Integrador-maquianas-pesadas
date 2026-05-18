@@ -40,40 +40,38 @@ VS Code	Ambiente de desenvolvimento
 │
 
 ├── 📂 style
-│   ├── reset.css
-│   ├── global.css
-│   ├── variables.css
-│   ├── navbar.css
-│   ├── footer.css
-│   ├── forms.css
-│   ├── buttons.css
-│   ├── dashboard.css
-│   ├── busca.css
-│   ├── detalhes.css
-│   ├── login.css
-│   ├── cadastro.css
-│   └── responsive.css
-│
+   ├── reset.css
+   ├── global.css
+   ├── variables.css
+   ├── navbar.css
+   ├── footer.css
+   ├── forms.css
+   ├── buttons.css
+   ├── dashboard.css
+   ├── busca.css
+   ├── detalhes.css
+   ├── login.css
+   ├── cadastro.css
+   └── responsive.css
 
 ├── 📂 script
-│   ├── main.js
-│   ├── login.js
-│   ├── cadastro.js
-│   ├── dashboard.js
-│   ├── busca.js
-│   ├── detalhes.js
-│   └── db.js
-│
+   ├── main.js
+   ├── login.js
+   ├── cadastro.js
+   ├── dashboard.js
+   ├── busca.js
+   ├── detalhes.js
+   └── db.js
+
 ├── 📂 images
-│   ├── logo.png
-│   ├── caminhao.png
-│   ├── compactador.png
-│   ├── escavadeira.png
-│   ├── guindaste.png
-│   ├── operador_guindaste.png
-│   ├── retroescavadeira.png
-│   └── trabalhador.png
-│
+   ├── logo.png
+   ├── caminhao.png
+   ├── compactador.png
+   ├── escavadeira.png
+   ├── guindaste.png
+   ├── operador_guindaste.png
+   ├── retroescavadeira.png
+   └── trabalhador.png
 
 └── 📂 templates
     ├── index.html
