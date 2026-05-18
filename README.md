@@ -35,8 +35,10 @@ VS Code	Ambiente de desenvolvimento
 4. ESTRUTURA DO PROJETO
 📦 maquinaria-pro
 │
+
 ├── 📄 README.md
 │
+
 ├── 📂 style
 │   ├── reset.css
 │   ├── global.css
@@ -52,6 +54,7 @@ VS Code	Ambiente de desenvolvimento
 │   ├── cadastro.css
 │   └── responsive.css
 │
+
 ├── 📂 script
 │   ├── main.js
 │   ├── login.js
@@ -71,6 +74,7 @@ VS Code	Ambiente de desenvolvimento
 │   ├── retroescavadeira.png
 │   └── trabalhador.png
 │
+
 └── 📂 templates
     ├── index.html
     ├── login.html
