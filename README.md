@@ -40,6 +40,7 @@ VS Code	Ambiente de desenvolvimento
 │
 
 ├── 📂 style
+
    ├── reset.css
    ├── global.css
    ├── variables.css
